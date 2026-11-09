@@ -84,7 +84,13 @@
   var setSel = document.getElementById("set");
   var statsEl = document.getElementById("stats");
   var footer = document.getElementById("footer");
-  var mode = store.get("mode", "cards");
+  var mode = store.get("mode", "write");
+  var MODE_HELP = {
+    write: "✍️ 默写：看中文，打出英文单词，按回车检查。不会可以点「提示」或「例句」。",
+    listen: "🎧 听写：听发音，打出英文单词。可以点「播放」再听一次。",
+    cards: "🃏 认词：第一次学新词时用。先看英文想意思，再看答案。",
+    print: "🖨 打印：打印成 A4 纸，用笔默写，答案折到背面。"
+  };
   var opts = { shuffle: store.get("shuffle", true), withSentence: store.get("withSentence", false) };
   var selected = null; // "review" | "all" | day id
   var quiz = null;
@@ -198,7 +204,7 @@
     var showPrompt = !listen || quiz.checked;
 
     var input = el("input", { type: "text", id: "answer", autocomplete: "off", autocapitalize: "off", autocorrect: "off",
-      spellcheck: "false", placeholder: "Type the word 输入单词…", value: quiz.answer,
+      spellcheck: "false", placeholder: "输入英文 Type…", value: quiz.answer,
       readonly: quiz.checked, class: quiz.checked ? (quiz.ok ? "ok" : "no") : "" });
     var form = el("form", { onsubmit: function (e) {
         e.preventDefault();
@@ -315,6 +321,7 @@
   function render() {
     app.textContent = "";
     document.querySelectorAll(".tabs button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.mode === mode)); });
+    document.getElementById("mode-help").textContent = MODE_HELP[mode] || "";
     if (mode === "print") return wordsOf(selected).length ? renderPrint() : renderEmpty();
     if (!quiz) { startQuiz(); return; }
     if (!quiz.words.length) return renderEmpty();

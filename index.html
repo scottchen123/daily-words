@@ -13,13 +13,14 @@
     <div id="stats"></div>
     <div class="bar">
       <select id="set" aria-label="Word set 选择单词"></select>
-      <div class="tabs" role="group" aria-label="Mode 模式">
-        <button data-mode="cards">Cards<small>认词</small></button>
-        <button data-mode="write">Write<small>默写</small></button>
-        <button data-mode="listen">Listen<small>听写</small></button>
-        <button data-mode="print">Print<small>打印</small></button>
-      </div>
     </div>
+    <div class="tabs" role="group" aria-label="Mode 模式">
+      <button data-mode="write">✍️ 默写<small>Write</small></button>
+      <button data-mode="listen">🎧 听写<small>Listen</small></button>
+      <button data-mode="cards">🃏 认词<small>Cards</small></button>
+      <button data-mode="print">🖨 打印<small>Print</small></button>
+    </div>
+    <p id="mode-help" class="muted"></p>
   </header>
   <main id="app"><p class="muted">Loading… 加载中…</p></main>
   <footer id="footer" class="noprint"></footer>
