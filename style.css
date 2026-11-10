@@ -144,8 +144,8 @@ ul.missed li { padding: 8px 0; border-bottom: 1px solid var(--line); }
 .pat { margin: 10px 0 14px; }
 .pat-head { display: flex; align-items: baseline; gap: 4px; }
 .pat-n { margin-left: auto; font-weight: 600; }
-.bar { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; margin: 4px 0; }
-.bar i { display: block; height: 100%; background: var(--bad); }
+.pbar { height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; margin: 4px 0; }
+.pbar i { display: block; height: 100%; background: var(--bad); }
 @media (max-width: 520px) {
   .kpis { grid-template-columns: repeat(2, 1fr); }
   .tabs button { font-size: 14px; padding: 8px 2px; }

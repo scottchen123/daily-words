@@ -651,7 +651,7 @@
           return el("div", { class: "pat" },
             el("div", { class: "pat-head" }, el("b", null, PATTERNS[k][0]), el("span", { class: "muted" }, " " + PATTERNS[k][1]),
               el("span", { class: "pat-n" }, pat[k] + " 次")),
-            el("div", { class: "bar" }, el("i", { style: "width:" + Math.round(pat[k] / pat[patKeys[0]] * 100) + "%" })),
+            el("div", { class: "pbar" }, el("i", { style: "width:" + Math.round(pat[k] / pat[patKeys[0]] * 100) + "%" })),
             el("div", { class: "muted" }, PATTERNS[k][2]));
         }))] : null,
 
