@@ -18,7 +18,7 @@
       "sentence": "This medicine is effective for treating most common colds.", "sentence_zh": "这种药对治疗大多数普通感冒有效。" },
     { "en": "involve", "phonetic": "/ɪnˈvɒlv/", "pos": "v.", "zh": "涉及；牵涉；包含",
       "sentence": "The new project will involve people from several different departments.", "sentence_zh": "这个新项目将涉及几个不同部门的人。" },
-    { "en": "neglect", "phonetic": "/nəˈglekt/", "pos": "v./n.", "zh": "忽视；疏忽",
+    { "en": "neglect", "phonetic": "/nɪˈɡlekt/", "pos": "v./n.", "zh": "忽视；疏忽",
       "sentence": "Parents should not neglect their children's emotional needs.", "sentence_zh": "父母不应该忽视孩子的情感需求。" },
     { "en": "political", "phonetic": "/pəˈlɪtɪkəl/", "pos": "adj.", "zh": "政治的",
       "sentence": "Our textbook explains the political system of several countries in detail.", "sentence_zh": "我们的教材详细介绍了几个国家的政治制度。" },
