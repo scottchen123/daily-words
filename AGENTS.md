@@ -78,8 +78,9 @@ If you can run Node, validate first: `node scripts/build.mjs` (prints `OK: …` 
 3. Tell the user (in simple Chinese): the file you added, how many words, and any word whose meaning or phonetic you filled in yourself.
 
 ## How the site uses the data (for context only)
-`scripts/build.mjs` merges all `words/*.json` into `_site/data.json`. The page has 4 modes — Cards (认词),
-Write (看中文默写), Listen (听写), Print (A4 默写纸) — and a spaced-review list ("Today's review") that brings each
-word back after 1, 2, 4, 7, 15, 30 days. Progress is keyed by `en` (lowercased) and stored in the learner's browser,
+`scripts/build.mjs` merges all `words/*.json` into `_site/data.json`. The page has 5 modes — Write (默写),
+Listen (听写), Cards (认词), Print (A4 默写纸), Summary (日/周/月总结 with most-missed words and spelling-error types) —
+plus a spaced-review list ("Today's review", words return after 1, 2, 4, 7, 15, 30 days) and Favourites (收藏).
+Progress, favourites and practice history are keyed by `en` (lowercased) and stored in the learner's browser,
 so **never rename or delete existing words**. Repeating a word in a later file is allowed (it shares progress), but
 avoid it unless the user wants it.
