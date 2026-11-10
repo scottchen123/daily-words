@@ -4,8 +4,8 @@ You are an AI assistant. The user gives you **word material** (a screenshot, pho
 with meanings) and this repo's URL. Your job: **add one new JSON file to `words/`** and commit it to `main`.
 That is the whole job. GitHub Actions validates the file and publishes the website automatically.
 
-- Repo: https://github.com/scottchen123/daily-words
-- Live site: https://scottchen123.github.io/daily-words/
+- Repo: https://github.com/skot-chen/daily-words
+- Live site: https://skot-chen.github.io/daily-words/
 - Learner: Chinese native speaker, English level B1–B2.
 
 ## Rules (do not break)
@@ -63,7 +63,7 @@ No other fields. Unknown fields are ignored and produce a warning.
 ## How to commit
 Any of these works:
 - **git**: clone, add the file, `git commit -m "Add words YYYY-MM-DD (N words)"`, push to `main`.
-- **GitHub API / MCP** (`create_or_update_file`, or `PUT /repos/scottchen123/daily-words/contents/words/YYYY-MM-DD.json`) on branch `main`
+- **GitHub API / MCP** (`create_or_update_file`, or `PUT /repos/skot-chen/daily-words/contents/words/YYYY-MM-DD.json`) on branch `main`
   with message `Add words YYYY-MM-DD (N words)`.
 - **GitHub web**: Add file → Create new file → `words/YYYY-MM-DD.json` → Commit to `main`.
 
@@ -71,10 +71,10 @@ If you can run Node, validate first: `node scripts/build.mjs` (prints `OK: …` 
 
 ## After committing — verify
 1. Check the latest run of **Actions → "Validate and deploy"** is green
-   (`gh run list -R scottchen123/daily-words -L 1`). Red = the file has an error; read the log, fix the file, commit again.
+   (`gh run list -R skot-chen/daily-words -L 1`). Red = the file has an error; read the log, fix the file, commit again.
    While it is red the live site keeps the old version, nothing breaks.
-2. About 1 minute later the new set appears at the top of the menu on https://scottchen123.github.io/daily-words/
-   (data is at `https://scottchen123.github.io/daily-words/data.json`).
+2. About 1 minute later the new set appears at the top of the menu on https://skot-chen.github.io/daily-words/
+   (data is at `https://skot-chen.github.io/daily-words/data.json`).
 3. Tell the user (in simple Chinese): the file you added, how many words, and any word whose meaning or phonetic you filled in yourself.
 
 ## How the site uses the data (for context only)

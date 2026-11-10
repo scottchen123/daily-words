@@ -1,6 +1,6 @@
 # Daily Words 每日单词
 
-👉 **打开网站 Open the site:** https://scottchen123.github.io/daily-words/
+👉 **打开网站 Open the site:** https://skot-chen.github.io/daily-words/
 
 背单词 + 默写的小网站。手机、电脑打开都能用。
 
@@ -18,7 +18,7 @@
 
 ```
 请按照这个仓库的 AGENTS.md 把这些单词加进去：
-https://github.com/scottchen123/daily-words
+https://github.com/skot-chen/daily-words
 ```
 
 AI 会新建一个 `words/日期.json` 文件。大约 1 分钟后，网站上就会出现新的一组单词。
