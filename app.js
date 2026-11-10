@@ -120,7 +120,9 @@
   // ---------- quiz flow ----------
   function startQuiz(list) {
     var words = list || wordsOf(selected);
-    quiz = { words: opts.shuffle ? shuffle(words) : words, pos: 0, right: 0, wrong: [],
+    // pos = the word being worked on; back = how many finished words we are looking back at;
+    // done[i] = result of finished word i ({answer, ok} or {rating}).
+    quiz = { words: opts.shuffle ? shuffle(words) : words, pos: 0, right: 0, wrong: [], done: [], back: 0,
              revealed: false, checked: false, ok: false, hint: false, sentence: false, answer: "" };
     render();
     autoSpeak();
@@ -140,6 +142,7 @@
   function rate(result) {
     var w = current();
     grade(w, result);
+    quiz.done[quiz.pos] = { rating: result };
     if (result === "good") quiz.right++; else quiz.wrong.push(w);
     refreshHeader();
     next();
@@ -149,11 +152,49 @@
     quiz.answer = value;
     quiz.checked = true;
     quiz.ok = norm(value) === norm(w.en);
+    quiz.done[quiz.pos] = { answer: value, ok: quiz.ok };
     grade(w, quiz.ok ? "good" : "bad");
     if (quiz.ok) quiz.right++; else quiz.wrong.push(w);
     refreshHeader();
     render();
     speak(w.en);
+  }
+
+  // ---------- going back to finished words ----------
+  function canGoBack() { return quiz.pos - quiz.back > 0; }
+  function goBack() {
+    if (!canGoBack()) return;
+    var i = document.getElementById("answer");
+    if (quiz.back === 0 && i && !quiz.checked) quiz.answer = i.value; // keep what was typed
+    quiz.back++;
+    render();
+  }
+  function goForward() { if (quiz.back > 0) { quiz.back--; render(); } }
+  function prevBtn() {
+    return canGoBack() ? el("button", { class: "btn", type: "button", onclick: goBack }, "← Previous 上一个") : null;
+  }
+  var RATING = { bad: "😕 Forgot 不认识", unsure: "🤔 Not sure 模糊", good: "😀 Knew it 认识" };
+
+  function renderPast() {
+    var idx = quiz.pos - quiz.back;
+    var w = quiz.words[idx], r = quiz.done[idx] || {};
+    var total = quiz.words.length;
+    add(app, el("section", { class: "card" },
+      el("div", { class: "progress" }, el("span", null, (idx + 1) + " / " + total + "  ·  Looking back 回看"),
+        el("span", null, "✓ " + quiz.right + "   ✗ " + quiz.wrong.length)),
+      el("div", { class: "meter" }, el("i", { style: "width:" + (idx / total * 100) + "%" })),
+      el("div", { class: "word" }, w.en, speakBtn(w)),
+      w.phonetic ? el("div", { class: "phon" }, w.phonetic) : null,
+      el("div", { class: "meaning" }, w.pos ? el("span", { class: "pos" }, w.pos) : null, w.zh),
+      sentenceBox(w, true),
+      r.rating ? el("p", null, "You chose 你选了: " + RATING[r.rating])
+        : "answer" in r ? el("div", { class: "feedback " + (r.ok ? "ok" : "no") },
+            (r.ok ? "✓ Correct 正确 — you wrote 你写的: " : "✗ You wrote 你写的: "), el("b", null, r.answer)) : null,
+      el("div", { class: "tools" }, prevBtn(),
+        el("button", { class: "btn primary", type: "button", id: "forward", onclick: goForward },
+          quiz.back > 1 ? "Next 下一个 →" : "Back to where I was 回到当前 →")),
+      el("p", { class: "muted" }, "← → keys also work. 也可以用键盘左右方向键。")));
+    setTimeout(function () { var b = document.getElementById("forward"); if (b) b.focus(); }, 0);
   }
 
   // ---------- views ----------
@@ -194,6 +235,7 @@
           el("button", { class: "btn mid", type: "button", onclick: function () { rate("unsure"); } }, "🤔 Not sure 模糊", el("kbd", null, "2")),
           el("button", { class: "btn good", type: "button", onclick: function () { rate("good"); } }, "😀 Knew it 认识", el("kbd", null, "3"))));
     }
+    body.push(el("div", { class: "tools" }, prevBtn()));
     add(app, el("section", { class: "card" }, body));
   }
 
@@ -232,7 +274,8 @@
       quiz.checked ? el("div", { class: "feedback " + (quiz.ok ? "ok" : "no") },
         quiz.ok ? "✓ Correct! 正确！ " : "✗ Answer 答案: ",
         el("span", { class: "ans" }, w.en), " ", w.phonetic ? el("span", { class: "phon" }, w.phonetic) : null, speakBtn(w)) : null,
-      el("p", { class: "muted" }, quiz.checked ? "Press Enter for the next word. 按回车到下一个。" : "Press Enter to check. 按回车检查。")));
+      el("div", { class: "tools" }, prevBtn()),
+      el("p",{ class: "muted" }, quiz.checked ? "Press Enter for the next word. 按回车到下一个。" : "Press Enter to check. 按回车检查。")));
     setTimeout(function () { var i = document.getElementById("answer"); if (i) i.focus(); }, 0);
   }
 
@@ -247,6 +290,7 @@
         : [el("p", null, "Practise these again 这些词再练一次:"),
            el("ul", { class: "list" }, wrong.map(function (w) { return el("li", null, el("b", null, w.en), " — " + w.zh); }))],
       el("div", { class: "tools" },
+        prevBtn(),
         wrong.length ? el("button", { class: "btn primary", type: "button", onclick: function () { startQuiz(wrong.slice()); } }, "↻ Only these 只练这些") : null,
         wasCards ? el("button", { class: wrong.length ? "btn" : "btn primary", type: "button",
           onclick: function () { setMode("write", quiz.words.slice()); } }, "✍ Now write them 现在默写") : null,
@@ -328,6 +372,7 @@
     add(app, el("div", { class: "options noprint" },
       el("label", { class: "check" }, el("input", { type: "checkbox", checked: opts.shuffle, onchange: function (e) {
         opts.shuffle = e.target.checked; store.set("shuffle", opts.shuffle); startQuiz(); } }), "Shuffle 打乱顺序")));
+    if (quiz.back > 0) return renderPast();
     if (quiz.pos >= quiz.words.length) return renderResult();
     if (mode === "cards") renderCards(); else renderWrite();
   }
@@ -339,8 +384,14 @@
 
   // ---------- keyboard (cards) ----------
   document.addEventListener("keydown", function (e) {
-    if (mode !== "cards" || !quiz || quiz.pos >= quiz.words.length) return;
+    if (!quiz || mode === "print") return;
     if (e.target && /INPUT|SELECT|TEXTAREA/.test(e.target.tagName)) return;
+    if (e.key === "ArrowLeft" && canGoBack()) { e.preventDefault(); goBack(); return; }
+    if (quiz.back > 0) {
+      if (e.key === "ArrowRight") { e.preventDefault(); goForward(); }
+      return; // Enter/Space go to the focused "next" button
+    }
+    if (mode !== "cards" || quiz.pos >= quiz.words.length) return;
     if (!quiz.revealed && (e.key === " " || e.key === "Enter")) { e.preventDefault(); quiz.revealed = true; render(); }
     else if (quiz.revealed && (e.key === "1" || e.key === "2" || e.key === "3")) {
       e.preventDefault(); rate(e.key === "1" ? "bad" : e.key === "2" ? "unsure" : "good");
