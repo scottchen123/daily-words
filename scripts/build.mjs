@@ -2,6 +2,7 @@
 // Usage: node scripts/build.mjs        (exit code 1 = a word file has an error)
 import fs from "node:fs";
 import path from "node:path";
+import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -62,6 +63,13 @@ if (errors.length) {
 fs.rmSync(outDir, { recursive: true, force: true });
 fs.mkdirSync(outDir);
 for (const f of SITE_FILES) fs.copyFileSync(path.join(root, f), path.join(outDir, f));
+// Cache-busting: index.html links style.css / app.js with ?v=<content hash>, so browsers load new versions at once.
+let html = fs.readFileSync(path.join(outDir, "index.html"), "utf8");
+for (const f of ["style.css", "app.js"]) {
+  const v = crypto.createHash("sha1").update(fs.readFileSync(path.join(root, f))).digest("hex").slice(0, 8);
+  html = html.replace(new RegExp('(href|src)="' + f.replace(".", "\.") + '"'), '$1="' + f + "?v=" + v + '"');
+}
+fs.writeFileSync(path.join(outDir, "index.html"), html);
 fs.writeFileSync(path.join(outDir, "data.json"), JSON.stringify({ built: new Date().toISOString(), days }));
 fs.writeFileSync(path.join(outDir, ".nojekyll"), "");
 const total = days.reduce((n, d) => n + d.words.length, 0);
