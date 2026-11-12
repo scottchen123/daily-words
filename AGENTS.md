@@ -19,6 +19,8 @@ That is the whole job. GitHub Actions validates the file and publishes the websi
    doesn't have it (e.g. phonetic missing → use British IPA like `/ˈwɜːd/`; meaning cut off in the image → write the
    most common meaning and tell the user which word you completed).
 5. Write `sentence` and `sentence_zh` yourself (see "Sentence rules").
+6. Write `roots`, `hook`, `family` yourself when the word has a real, well-known etymology (see "Word-root rules").
+   **Never invent etymology.** If you are not sure, leave those fields out.
 
 ## File format (fixed — keep exactly this shape)
 ```json
@@ -32,7 +34,10 @@ That is the whole job. GitHub Actions validates the file and publishes the websi
       "pos": "v./n.",
       "zh": "推进；促进；进步",
       "sentence": "Medical science has advanced a lot in the last fifty years.",
-      "sentence_zh": "过去五十年里，医学进步了很多。"
+      "sentence_zh": "过去五十年里，医学进步了很多。",
+      "roots": "a(b)-（从）+ vance（= ante，在前面）→ 往前去",
+      "hook": "advantage 优势：同一个 van(t)「在前面」",
+      "family": ["advantage 优势", "vanguard 先锋"]
     }
   ]
 }
@@ -49,8 +54,13 @@ That is the whole job. GitHub Actions validates the file and publishes the websi
 | `pos` | no | `n.` `v.` `adj.` `adv.` `prep.` `conj.` `phr.` — combine with `/`, e.g. `n./v.` |
 | `sentence` | no (strongly wanted) | Example sentence, see rules below. |
 | `sentence_zh` | no (strongly wanted) | Natural Chinese translation of `sentence`. |
+| `roots` | no (wanted) | 🧩 Real morpheme breakdown in Chinese: `前缀（意思）+ 词根（意思）+ 后缀（意思）→ 字面意思 → 现在的意思`. |
+| `hook` | no | 🔗 One **familiar** word (primary/middle-school level) that truly shares the root, + why. Format: `熟词 中文：说明`. |
+| `family` | no | 🌲 List of 2–3 (max 5) **real** same-root words, each `"word 中文"`. |
+| `mnemonic` | no | 💭 Only when there is no usable real root: a memory trick. The site labels it "不是真词源". |
 
-No other fields. Unknown fields are ignored and produce a warning.
+No other fields. Unknown fields are ignored and produce a warning. Shown on the site only after the learner
+answers (so they never give away the spelling).
 
 ## Sentence rules
 - B1–B2 level, natural everyday or news English, 8–16 words, one sentence.
@@ -59,6 +69,19 @@ No other fields. Unknown fields are ignored and produce a warning.
   Irregular forms don't match — use the base form or a regular `-s/-ed/-ing/-ly` form instead.
 - Use the most common meaning (the first one in `zh`).
 - Avoid names of real living people, politics, and anything sad or violent.
+
+## Word-root rules (🧩 roots / hook / family / mnemonic)
+The learner remembers better through **real** word families. Wrong etymology is worse than none.
+- Use only etymology you are confident is standard (what Etymonline / Oxford would say). Typical: Latin/Greek roots
+  (`fac/fic/fect` 做, `nov` 新, `tract` 拉, `spec/spect` 看, `mot` 动, `dict` 说, `cess` 走 …) and clear prefixes/suffixes.
+- `hook` must be a **true cognate or same-root word** the learner already knows (fact, new, middle, motor, police …).
+  You may name the sound-change pattern the learner uses — 元音互换 / 哥科呵(g,k,h) / 德特斯(d,t,s) / u,v,w /
+  摩诺勒日(m,n,l,r) / 波破莫分屋(b,p,m,f,v) — **only when the two words really are related**
+  (✓ new ↔ nov, middle ↔ medi, lean ↔ clin; ✗ moon ↔ luna, glue ↔ clue, rest ↔ rust, fine ↔ bene — not related).
+- Germanic everyday words often have no useful root (boost, gain, struggle, trend …): leave `roots` out. A real English
+  cognate in `hook` is fine (raise ↔ rise).
+- If you want to give a pure memory trick, put it in `mnemonic`, never in `roots`/`hook`.
+- Keep each field one short line of simple Chinese; no academic terms (no "PIE", "Grimm's law").
 
 ## How to commit
 Any of these works:
@@ -75,7 +98,8 @@ If you can run Node, validate first: `node scripts/build.mjs` (prints `OK: …` 
    While it is red the live site keeps the old version, nothing breaks.
 2. About 1 minute later the new set appears at the top of the menu on https://skot-chen.github.io/daily-words/
    (data is at `https://skot-chen.github.io/daily-words/data.json`).
-3. Tell the user (in simple Chinese): the file you added, how many words, and any word whose meaning or phonetic you filled in yourself.
+3. Tell the user (in simple Chinese): the file you added, how many words, any word whose meaning or phonetic you
+   filled in yourself, and which words got no 🧩 roots (and why).
 
 ## How the site uses the data (for context only)
 `scripts/build.mjs` merges all `words/*.json` into `_site/data.json`. The page has 5 modes — Write (默写),

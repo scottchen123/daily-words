@@ -2,45 +2,284 @@
   "date": "2026-11-09",
   "title": "第1组 Set 1",
   "words": [
-    { "en": "advance", "phonetic": "/ədˈvɑːns/", "pos": "v./n.", "zh": "推进；促进；进步",
-      "sentence": "Medical science has advanced a lot in the last fifty years.", "sentence_zh": "过去五十年里，医学进步了很多。" },
-    { "en": "boost", "phonetic": "/buːst/", "pos": "v./n.", "zh": "提高；促进",
-      "sentence": "The new park could boost tourism in the small town.", "sentence_zh": "新公园可能会促进这个小镇的旅游业。" },
-    { "en": "claim", "phonetic": "/kleɪm/", "pos": "n./v.", "zh": "声称；说法；索取",
-      "sentence": "The company claims that its product is completely safe.", "sentence_zh": "这家公司声称它的产品完全安全。" },
-    { "en": "current", "phonetic": "/ˈkʌrənt/", "pos": "adj.", "zh": "当前的；目前的",
-      "sentence": "I like my current job, but I want to learn new skills.", "sentence_zh": "我喜欢我目前的工作，但我想学新技能。" },
-    { "en": "decline", "phonetic": "/dɪˈklaɪn/", "pos": "n./v.", "zh": "下降；衰退；拒绝",
-      "sentence": "The number of young people in the village has declined since 2010.", "sentence_zh": "自2010年以来，村里年轻人的数量下降了。" },
-    { "en": "define", "phonetic": "/dɪˈfaɪn/", "pos": "v.", "zh": "下定义；界定",
-      "sentence": "It is hard to define what makes a person happy.", "sentence_zh": "很难界定是什么让一个人快乐。" },
-    { "en": "demand", "phonetic": "/dɪˈmɑːnd/", "pos": "n./v.", "zh": "需求；要求",
-      "sentence": "There is a growing demand for electric cars.", "sentence_zh": "人们对电动汽车的需求在不断增长。" },
-    { "en": "efficiency", "phonetic": "/ɪˈfɪʃənsi/", "pos": "n.", "zh": "效率；效能",
-      "sentence": "The new software improved our team's efficiency.", "sentence_zh": "新软件提高了我们团队的效率。" },
-    { "en": "factor", "phonetic": "/ˈfæktə/", "pos": "n.", "zh": "因素",
-      "sentence": "Price is an important factor when people buy a phone.", "sentence_zh": "价格是人们买手机时的一个重要因素。" },
-    { "en": "federal", "phonetic": "/ˈfedərəl/", "pos": "adj.", "zh": "联邦的",
-      "sentence": "The federal government will spend more money on schools.", "sentence_zh": "联邦政府将在学校上投入更多资金。" },
-    { "en": "firm", "phonetic": "/fɜːm/", "pos": "n./adj.", "zh": "公司；坚定的",
-      "sentence": "She works for a small law firm in London.", "sentence_zh": "她在伦敦一家小律师事务所工作。" },
-    { "en": "form", "phonetic": "/fɔːm/", "pos": "v./n.", "zh": "形成；形式；表格",
-      "sentence": "Please fill in this form and sign at the bottom.", "sentence_zh": "请填写这张表格，并在底部签名。" },
-    { "en": "gain", "phonetic": "/ɡeɪn/", "pos": "n./v.", "zh": "收益；获得；增加",
-      "sentence": "You can gain a lot of experience from a part-time job.", "sentence_zh": "你可以从兼职工作中获得很多经验。" },
-    { "en": "immediate", "phonetic": "/ɪˈmiːdiət/", "pos": "adj.", "zh": "即时的；直接的",
-      "sentence": "The new rule had an immediate effect on prices.", "sentence_zh": "新规定对价格产生了即时的影响。" },
-    { "en": "increasingly", "phonetic": "/ɪnˈkriːsɪŋli/", "pos": "adv.", "zh": "越来越多地；日益",
-      "sentence": "Online shopping is becoming increasingly popular.", "sentence_zh": "网上购物越来越受欢迎。" },
-    { "en": "inevitably", "phonetic": "/ɪˈnevətəbli/", "pos": "adv.", "zh": "不可避免地",
-      "sentence": "If you never rest, you will inevitably get sick.", "sentence_zh": "如果你从不休息，你不可避免地会生病。" },
-    { "en": "influence", "phonetic": "/ˈɪnfluəns/", "pos": "v./n.", "zh": "影响",
-      "sentence": "My grandmother had a big influence on my life.", "sentence_zh": "我的祖母对我的人生影响很大。" },
-    { "en": "innovation", "phonetic": "/ˌɪnəˈveɪʃən/", "pos": "n.", "zh": "创新；新事物",
-      "sentence": "Innovation is the key to the company's success.", "sentence_zh": "创新是这家公司成功的关键。" },
-    { "en": "remain", "phonetic": "/rɪˈmeɪn/", "pos": "v.", "zh": "留存；仍然是；剩下",
-      "sentence": "Please remain in your seats until the plane stops.", "sentence_zh": "飞机停稳之前，请留在座位上。" },
-    { "en": "actually", "phonetic": "/ˈæktʃuəli/", "pos": "adv.", "zh": "实际上；事实上",
-      "sentence": "I thought he was American, but actually he's Canadian.", "sentence_zh": "我以为他是美国人，但实际上他是加拿大人。" }
+    {
+      "en": "advance",
+      "phonetic": "/ədˈvɑːns/",
+      "pos": "v./n.",
+      "zh": "推进；促进；进步",
+      "sentence": "Medical science has advanced a lot in the last fifty years.",
+      "sentence_zh": "过去五十年里，医学进步了很多。",
+      "roots": "a(b)-（从）+ vance（= ante，在前面）→ 往前去",
+      "hook": "advantage 优势：同一个 van(t)「在前面」",
+      "family": [
+        "advantage 优势",
+        "vanguard 先锋"
+      ]
+    },
+    {
+      "en": "boost",
+      "phonetic": "/buːst/",
+      "pos": "v./n.",
+      "zh": "提高；促进",
+      "sentence": "The new park could boost tourism in the small town.",
+      "sentence_zh": "新公园可能会促进这个小镇的旅游业。"
+    },
+    {
+      "en": "claim",
+      "phonetic": "/kleɪm/",
+      "pos": "n./v.",
+      "zh": "声称；说法；索取",
+      "sentence": "The company claims that its product is completely safe.",
+      "sentence_zh": "这家公司声称它的产品完全安全。",
+      "roots": "claim（= clam，大声喊）→ 大声说出来 → 声称；要求",
+      "hook": "exclamation mark 感叹号「!」：ex（出）+ clam（喊）",
+      "family": [
+        "exclaim 惊呼",
+        "proclaim 宣布",
+        "acclaim 称赞"
+      ]
+    },
+    {
+      "en": "current",
+      "phonetic": "/ˈkʌrənt/",
+      "pos": "adj.",
+      "zh": "当前的；目前的",
+      "sentence": "I like my current job, but I want to learn new skills.",
+      "sentence_zh": "我喜欢我目前的工作，但我想学新技能。",
+      "roots": "curr（跑）+ -ent（…的）→ 正在跑的 → 当前的；水流、电流",
+      "hook": "course 课程、路线：同一个 cur「跑」",
+      "family": [
+        "occur 发生",
+        "excursion 远足",
+        "curriculum 课程"
+      ]
+    },
+    {
+      "en": "decline",
+      "phonetic": "/dɪˈklaɪn/",
+      "pos": "n./v.",
+      "zh": "下降；衰退；拒绝",
+      "sentence": "The number of young people in the village has declined since 2010.",
+      "sentence_zh": "自2010年以来，村里年轻人的数量下降了。",
+      "roots": "de-（向下）+ clin（倾斜）→ 往下倾 → 下降；（头一偏）拒绝",
+      "hook": "lean 斜靠：clin ↔ (h)lean，哥科呵互换，真同源",
+      "family": [
+        "incline 倾向于",
+        "recline 向后靠"
+      ]
+    },
+    {
+      "en": "define",
+      "phonetic": "/dɪˈfaɪn/",
+      "pos": "v.",
+      "zh": "下定义；界定",
+      "sentence": "It is hard to define what makes a person happy.",
+      "sentence_zh": "很难界定是什么让一个人快乐。",
+      "roots": "de-（完全）+ fin（边界；结束）→ 把边界划清楚 → 下定义",
+      "hook": "final / finish 结束：同一个 fin",
+      "family": [
+        "finite 有限的",
+        "infinite 无限的",
+        "confine 限制"
+      ]
+    },
+    {
+      "en": "demand",
+      "phonetic": "/dɪˈmɑːnd/",
+      "pos": "n./v.",
+      "zh": "需求；要求",
+      "sentence": "There is a growing demand for electric cars.",
+      "sentence_zh": "人们对电动汽车的需求在不断增长。",
+      "roots": "de-（加强）+ mand（命令；交给）→ 强烈要求",
+      "hook": "command 命令：同一个 mand",
+      "family": [
+        "command 命令",
+        "recommend 推荐",
+        "mandate 授权"
+      ]
+    },
+    {
+      "en": "efficiency",
+      "phonetic": "/ɪˈfɪʃənsi/",
+      "pos": "n.",
+      "zh": "效率；效能",
+      "sentence": "The new software improved our team's efficiency.",
+      "sentence_zh": "新软件提高了我们团队的效率。",
+      "roots": "ef-（= ex，出）+ fic（= fac，做）+ -iency（名词）→ 能做出成果的程度",
+      "hook": "fact / factory：fac ↔ fic，元音互换，同一个「做」",
+      "family": [
+        "sufficient 足够的",
+        "deficient 缺乏的",
+        "proficient 熟练的"
+      ]
+    },
+    {
+      "en": "factor",
+      "phonetic": "/ˈfæktə/",
+      "pos": "n.",
+      "zh": "因素",
+      "sentence": "Price is an important factor when people buy a phone.",
+      "sentence_zh": "价格是人们买手机时的一个重要因素。",
+      "roots": "fact（做）+ -or（…的东西）→ 起作用的东西 → 因素",
+      "hook": "factory 工厂：同一个 fac「做」",
+      "family": [
+        "manufacture 制造",
+        "facility 设施"
+      ]
+    },
+    {
+      "en": "federal",
+      "phonetic": "/ˈfedərəl/",
+      "pos": "adj.",
+      "zh": "联邦的",
+      "sentence": "The federal government will spend more money on schools.",
+      "sentence_zh": "联邦政府将在学校上投入更多资金。",
+      "roots": "feder（盟约）+ -al（…的）→ 结盟的 → 联邦的",
+      "hook": "faith 信任：feder 和 faith 来自同一个「信任」，结盟靠信任",
+      "family": [
+        "federation 联邦",
+        "confederation 联盟"
+      ]
+    },
+    {
+      "en": "firm",
+      "phonetic": "/fɜːm/",
+      "pos": "n./adj.",
+      "zh": "公司；坚定的",
+      "sentence": "She works for a small law firm in London.",
+      "sentence_zh": "她在伦敦一家小律师事务所工作。",
+      "roots": "firm（坚固的）；「公司」义来自意大利语 firma（签名）",
+      "hook": "confirm 确认：con（加强）+ firm（坚固）→ 再加固一下",
+      "family": [
+        "confirm 确认",
+        "affirm 断言",
+        "infirm 虚弱的"
+      ]
+    },
+    {
+      "en": "form",
+      "phonetic": "/fɔːm/",
+      "pos": "v./n.",
+      "zh": "形成；形式；表格",
+      "sentence": "Please fill in this form and sign at the bottom.",
+      "sentence_zh": "请填写这张表格，并在底部签名。",
+      "roots": "form（形状；样式）",
+      "hook": "uniform 校服：uni（一）+ form → 统一的样式",
+      "family": [
+        "inform 通知",
+        "reform 改革",
+        "formal 正式的"
+      ]
+    },
+    {
+      "en": "gain",
+      "phonetic": "/ɡeɪn/",
+      "pos": "n./v.",
+      "zh": "收益；获得；增加",
+      "sentence": "You can gain a lot of experience from a part-time job.",
+      "sentence_zh": "你可以从兼职工作中获得很多经验。"
+    },
+    {
+      "en": "immediate",
+      "phonetic": "/ɪˈmiːdiət/",
+      "pos": "adj.",
+      "zh": "即时的；直接的",
+      "sentence": "The new rule had an immediate effect on prices.",
+      "sentence_zh": "新规定对价格产生了即时的影响。",
+      "roots": "im-（没有）+ medi（中间）+ -ate → 中间没有隔着 → 立刻的；直接的",
+      "hook": "middle 中间：medi ↔ mid，德特斯互换，真同源",
+      "family": [
+        "medium 中等的",
+        "intermediate 中级的",
+        "mediate 调解"
+      ]
+    },
+    {
+      "en": "increasingly",
+      "phonetic": "/ɪnˈkriːsɪŋli/",
+      "pos": "adv.",
+      "zh": "越来越多地；日益",
+      "sentence": "Online shopping is becoming increasingly popular.",
+      "sentence_zh": "网上购物越来越受欢迎。",
+      "roots": "in-（加）+ creas（生长）+ -ing + -ly → 不断长大地 → 越来越",
+      "hook": "decrease 减少：de（向下）+ creas（长）",
+      "family": [
+        "decrease 减少",
+        "crescent 新月（正在长的月亮）",
+        "concrete 混凝土（长在一起）"
+      ]
+    },
+    {
+      "en": "inevitably",
+      "phonetic": "/ɪˈnevətəbli/",
+      "pos": "adv.",
+      "zh": "不可避免地",
+      "sentence": "If you never rest, you will inevitably get sick.",
+      "sentence_zh": "如果你从不休息，你不可避免地会生病。",
+      "roots": "in-（不）+ e-（出）+ vit（避开）+ -able（能）+ -ly → 躲不出去地 → 不可避免地",
+      "family": [
+        "inevitable 不可避免的"
+      ]
+    },
+    {
+      "en": "influence",
+      "phonetic": "/ˈɪnfluəns/",
+      "pos": "v./n.",
+      "zh": "影响",
+      "sentence": "My grandmother had a big influence on my life.",
+      "sentence_zh": "我的祖母对我的人生影响很大。",
+      "roots": "in-（进入）+ flu（流）+ -ence → 流进去 → 影响",
+      "hook": "flu 流感 / fluent 流利的：同一个 flu「流」",
+      "family": [
+        "fluent 流利的",
+        "fluid 液体",
+        "affluent 富裕的（钱流进来）"
+      ]
+    },
+    {
+      "en": "innovation",
+      "phonetic": "/ˌɪnəˈveɪʃən/",
+      "pos": "n.",
+      "zh": "创新；新事物",
+      "sentence": "Innovation is the key to the company's success.",
+      "sentence_zh": "创新是这家公司成功的关键。",
+      "roots": "in-（进入）+ nov（新）+ -ation（名词）→ 引入新东西 → 创新",
+      "hook": "new 新：nov ↔ new，u/v/w 互换，真同源",
+      "family": [
+        "novel 新奇的；小说",
+        "renovate 翻新",
+        "novice 新手"
+      ]
+    },
+    {
+      "en": "remain",
+      "phonetic": "/rɪˈmeɪn/",
+      "pos": "v.",
+      "zh": "留存；仍然是；剩下",
+      "sentence": "Please remain in your seats until the plane stops.",
+      "sentence_zh": "飞机停稳之前，请留在座位上。",
+      "roots": "re-（向后）+ main（留下）→ 留在后面 → 留下；仍然是",
+      "hook": "permanent 永久的：per（一直）+ man（留）",
+      "family": [
+        "permanent 永久的",
+        "remnant 剩余部分",
+        "mansion 大宅（住下来的地方）"
+      ]
+    },
+    {
+      "en": "actually",
+      "phonetic": "/ˈæktʃuəli/",
+      "pos": "adv.",
+      "zh": "实际上；事实上",
+      "sentence": "I thought he was American, but actually he's Canadian.",
+      "sentence_zh": "我以为他是美国人，但实际上他是加拿大人。",
+      "roots": "act（做）+ -ual（…的）+ -ly → 真正做了的 → 实际上",
+      "hook": "act / action 行动",
+      "family": [
+        "activity 活动",
+        "react 反应",
+        "exact 精确的"
+      ]
+    }
   ]
 }

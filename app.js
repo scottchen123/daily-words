@@ -228,6 +228,7 @@
       w.phonetic ? el("div", { class: "phon" }, w.phonetic) : null,
       el("div", { class: "meaning" }, w.pos ? el("span", { class: "pos" }, w.pos) : null, w.zh),
       sentenceBox(w, true),
+      rootsBox(w),
       r.rating ? el("p", null, "You chose 你选了: " + RATING[r.rating])
         : "answer" in r ? el("div", { class: "feedback " + (r.ok ? "ok" : "no") },
             (r.ok ? "✓ Correct 正确 — you wrote 你写的: " : "✗ You wrote 你写的: "), el("b", null, r.answer)) : null,
@@ -259,6 +260,18 @@
       w.sentence_zh ? el("div", { class: "zh" }, w.sentence_zh) : null);
   }
 
+  // 🧩 word roots: real breakdown, real cognate hook, word family; mnemonic is marked as not real etymology
+  function rootsBox(w) {
+    if (!w.roots && !w.hook && !w.family && !w.mnemonic) return null;
+    return el("div", { class: "roots" },
+      el("div", { class: "roots-h" }, "🧩 词根拆解 Word roots"),
+      w.roots ? el("div", null, w.roots) : null,
+      w.hook ? el("div", null, el("span", { class: "k" }, "🔗 熟词 "), w.hook) : null,
+      w.family && w.family.length ? el("div", null, el("span", { class: "k" }, "🌲 同族 "), w.family.join(" · ")) : null,
+      w.mnemonic ? el("div", { class: "mn" }, el("span", { class: "k" }, "💭 联想 "), w.mnemonic,
+        el("small", null, "（帮助记忆的联想，不是真词源）")) : null);
+  }
+
   function renderCards() {
     var w = current();
     var body = [progressBar(),
@@ -271,6 +284,7 @@
     } else {
       body.push(el("div", { class: "meaning" }, w.pos ? el("span", { class: "pos" }, w.pos) : null, w.zh),
         sentenceBox(w, true),
+        rootsBox(w),
         el("div", { class: "rate" },
           el("button", { class: "btn bad", type: "button", onclick: function () { rate("bad"); } }, "😕 Forgot 不认识", el("kbd", null, "1")),
           el("button", { class: "btn mid", type: "button", onclick: function () { rate("unsure"); } }, "🤔 Not sure 模糊", el("kbd", null, "2")),
@@ -315,6 +329,7 @@
       quiz.checked ? el("div", { class: "feedback " + (quiz.ok ? "ok" : "no") },
         quiz.ok ? "✓ Correct! 正确！ " : "✗ Answer 答案: ",
         el("span", { class: "ans" }, w.en), " ", w.phonetic ? el("span", { class: "phon" }, w.phonetic) : null, speakBtn(w)) : null,
+      quiz.checked ? rootsBox(w) : null,
       el("div", { class: "tools" }, prevBtn(), favBtn(w)),
       el("p",{ class: "muted" }, quiz.checked ? "Press Enter for the next word. 按回车到下一个。" : "Press Enter to check. 按回车检查。")));
     setTimeout(function () { var i = document.getElementById("answer"); if (i) i.focus(); }, 0);

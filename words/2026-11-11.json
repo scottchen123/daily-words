@@ -2,63 +2,397 @@
   "date": "2026-11-11",
   "title": "第3组 Set 3",
   "words": [
-    { "en": "associate", "phonetic": "/əˈsəʊʃieɪt/", "pos": "v.", "zh": "把…联系起来；联想",
-      "sentence": "She always associates the smell of rain with her childhood.", "sentence_zh": "她总是把雨的味道和童年联系在一起。" },
-    { "en": "assume", "phonetic": "/əˈsjuːm/", "pos": "v.", "zh": "假定；认为；承担",
-      "sentence": "I assumed you would be late, so I started without you.", "sentence_zh": "我以为你会迟到，所以先开始了。" },
-    { "en": "despite", "phonetic": "/dɪˈspaɪt/", "pos": "prep.", "zh": "尽管",
-      "sentence": "Despite the rain, we went hiking and had a great time.", "sentence_zh": "尽管下着雨，我们还是去爬山了，玩得很开心。" },
-    { "en": "determine", "phonetic": "/dɪˈtɜːmɪn/", "pos": "v.", "zh": "决定；确定",
-      "sentence": "The judge will determine the result after hearing both sides.", "sentence_zh": "法官听完双方陈述后会确定结果。" },
-    { "en": "efficient", "phonetic": "/ɪˈfɪʃənt/", "pos": "adj.", "zh": "高效的",
-      "sentence": "This new app makes our work more efficient.", "sentence_zh": "这个新应用让我们的工作更高效。" },
-    { "en": "emotional", "phonetic": "/ɪˈməʊʃənəl/", "pos": "adj.", "zh": "情感的；情绪的",
-      "sentence": "Watching that movie was emotional, and I cried at the end.", "sentence_zh": "看那部电影很感人，结尾我哭了。" },
-    { "en": "establish", "phonetic": "/ɪˈstæblɪʃ/", "pos": "v.", "zh": "建立；确立",
-      "sentence": "The company was established in 2010 by two engineers.", "sentence_zh": "这家公司是2010年由两位工程师创立的。" },
-    { "en": "executive", "phonetic": "/ɪɡˈzekjətɪv/", "pos": "n.", "zh": "主管；高管",
-      "sentence": "The executive team will meet next week to discuss the budget.", "sentence_zh": "高管团队下周开会讨论预算。" },
-    { "en": "figure", "phonetic": "/ˈfɪɡə/", "pos": "n./v.", "zh": "数字；人物；认为",
-      "sentence": "I can't figure out why the printer stopped working.", "sentence_zh": "我想不通打印机为什么不工作了。" },
-    { "en": "financial", "phonetic": "/fəˈnænʃəl/", "pos": "adj.", "zh": "财务的；金融的",
-      "sentence": "Many families need better financial advice before buying a house.", "sentence_zh": "很多家庭在买房前需要更好的财务建议。" },
-    { "en": "identify", "phonetic": "/aɪˈdentɪfaɪ/", "pos": "v.", "zh": "识别；确定",
-      "sentence": "Doctors can identify the problem by checking your blood.", "sentence_zh": "医生可以通过检查血液找出问题所在。" },
-    { "en": "impact", "phonetic": "/ˈɪmpækt/", "pos": "n./v.", "zh": "影响；冲击",
-      "sentence": "Social media can have a big impact on teenagers.", "sentence_zh": "社交媒体会对青少年产生很大影响。" },
-    { "en": "individual", "phonetic": "/ˌɪndɪˈvɪdʒuəl/", "pos": "adj./n.", "zh": "个人的；个体",
-      "sentence": "Each individual student has a different learning style.", "sentence_zh": "每个学生的学习风格都不同。" },
-    { "en": "innovative", "phonetic": "/ˈɪnəveɪtɪv/", "pos": "adj.", "zh": "创新的",
-      "sentence": "The team came up with an innovative idea to save water.", "sentence_zh": "团队想出了一个创新的节水办法。" },
-    { "en": "invest", "phonetic": "/ɪnˈvest/", "pos": "v.", "zh": "投资；投入",
-      "sentence": "Many people invest their savings in stocks and funds.", "sentence_zh": "很多人把积蓄投资到股票和基金中。" },
-    { "en": "labor", "phonetic": "/ˈleɪbə/", "pos": "n.", "zh": "劳动力；劳动",
-      "sentence": "The factory needs more labor to finish the order on time.", "sentence_zh": "工厂需要更多劳动力才能按时完成订单。" },
-    { "en": "landscape", "phonetic": "/ˈlændskeɪp/", "pos": "n.", "zh": "景观；格局",
-      "sentence": "The landscape near the lake looks beautiful in autumn.", "sentence_zh": "秋天湖边的景观非常美。" },
-    { "en": "occasional", "phonetic": "/əˈkeɪʒənəl/", "pos": "adj.", "zh": "偶尔的",
-      "sentence": "I only go to the gym on occasional weekends.", "sentence_zh": "我只是偶尔在周末去健身房。" },
-    { "en": "overall", "phonetic": "/ˌəʊvərˈɔːl/", "pos": "adj.", "zh": "总体的；全面的",
-      "sentence": "Overall, the trip was fun, although the weather was cold.", "sentence_zh": "总的来说这次旅行很有趣，虽然天气有点冷。" },
-    { "en": "particular", "phonetic": "/pəˈtɪkjələ/", "pos": "adj.", "zh": "特别的；特定的",
-      "sentence": "She has a particular interest in ancient history.", "sentence_zh": "她对古代历史有一种特别的兴趣。" },
-    { "en": "policy", "phonetic": "/ˈpɒləsi/", "pos": "n.", "zh": "政策；方针",
-      "sentence": "The school changed its policy on late homework.", "sentence_zh": "学校改变了迟交作业的政策。" },
-    { "en": "pressure", "phonetic": "/ˈpreʃə/", "pos": "n.", "zh": "压力",
-      "sentence": "Many students feel pressure before final exams.", "sentence_zh": "很多学生在期末考试前感到压力。" },
-    { "en": "previous", "phonetic": "/ˈpriːviəs/", "pos": "adj.", "zh": "以前的；先前的",
-      "sentence": "My previous job was in a bank, but now I work online.", "sentence_zh": "我以前在银行工作，现在改做网络工作了。" },
-    { "en": "process", "phonetic": "/ˈprəʊses/", "pos": "n./v.", "zh": "过程；处理",
-      "sentence": "Learning a new language is a slow process.", "sentence_zh": "学习一门新语言是个慢慢来的过程。" },
-    { "en": "specific", "phonetic": "/spəˈsɪfɪk/", "pos": "adj.", "zh": "具体的；特定的",
-      "sentence": "Please give me a specific example of your idea.", "sentence_zh": "请给我一个你这个想法的具体例子。" },
-    { "en": "strategy", "phonetic": "/ˈstrætədʒi/", "pos": "n.", "zh": "战略；策略",
-      "sentence": "Our strategy is to focus on quality rather than price.", "sentence_zh": "我们的策略是注重质量，而不是价格。" },
-    { "en": "term", "phonetic": "/tɜːm/", "pos": "n.", "zh": "期限；术语；条款",
-      "sentence": "The contract has several terms that you should read carefully.", "sentence_zh": "这份合同有几条条款，你应该仔细读。" },
-    { "en": "threaten", "phonetic": "/ˈθretən/", "pos": "v.", "zh": "威胁；有…的危险",
-      "sentence": "Heavy rain threatened to ruin our picnic plans.", "sentence_zh": "大雨差点毁了我们的野餐计划。" },
-    { "en": "trend", "phonetic": "/trend/", "pos": "n.", "zh": "趋势",
-      "sentence": "Short videos are a growing trend among young people.", "sentence_zh": "短视频是年轻人中越来越流行的趋势。" }
+    {
+      "en": "associate",
+      "phonetic": "/əˈsəʊʃieɪt/",
+      "pos": "v.",
+      "zh": "把…联系起来；联想",
+      "sentence": "She always associates the smell of rain with her childhood.",
+      "sentence_zh": "她总是把雨的味道和童年联系在一起。",
+      "roots": "as-（= ad，向）+ soci（同伴）+ -ate → 结为同伴 → 联系；联想",
+      "hook": "social 社会的 / society：同一个 soci",
+      "family": [
+        "association 协会",
+        "sociable 好交际的"
+      ]
+    },
+    {
+      "en": "assume",
+      "phonetic": "/əˈsjuːm/",
+      "pos": "v.",
+      "zh": "假定；认为；承担",
+      "sentence": "I assumed you would be late, so I started without you.",
+      "sentence_zh": "我以为你会迟到，所以先开始了。",
+      "roots": "as-（= ad，向）+ sum（拿）→ 拿过来 → 承担；假定",
+      "hook": "consume 消费：con（全部）+ sum（拿）",
+      "family": [
+        "consume 消费",
+        "resume 恢复",
+        "presume 推测"
+      ]
+    },
+    {
+      "en": "despite",
+      "phonetic": "/dɪˈspaɪt/",
+      "pos": "prep.",
+      "zh": "尽管",
+      "sentence": "Despite the rain, we went hiking and had a great time.",
+      "sentence_zh": "尽管下着雨，我们还是去爬山了，玩得很开心。",
+      "roots": "de-（向下）+ spite（= spec，看）→ 往下看 → 轻视 → 不顾 → 尽管",
+      "hook": "respect 尊重：re（回）+ spect（看）—— despite 正好相反，是往下看",
+      "family": [
+        "respect 尊重",
+        "spectator 观众"
+      ]
+    },
+    {
+      "en": "determine",
+      "phonetic": "/dɪˈtɜːmɪn/",
+      "pos": "v.",
+      "zh": "决定；确定",
+      "sentence": "The judge will determine the result after hearing both sides.",
+      "sentence_zh": "法官听完双方陈述后会确定结果。",
+      "roots": "de-（完全）+ termin（界限）→ 把界限定下来 → 决定；确定",
+      "hook": "term 期限：同一个 term「界限」",
+      "family": [
+        "terminal 终点站",
+        "terminate 终止"
+      ]
+    },
+    {
+      "en": "efficient",
+      "phonetic": "/ɪˈfɪʃənt/",
+      "pos": "adj.",
+      "zh": "高效的",
+      "sentence": "This new app makes our work more efficient.",
+      "sentence_zh": "这个新应用让我们的工作更高效。",
+      "roots": "ef-（= ex，出）+ fic（= fac，做）+ -ient（…的）→ 能做出成果的 → 高效的",
+      "hook": "fact / factory：fac ↔ fic，同一个「做」",
+      "family": [
+        "efficiency 效率",
+        "sufficient 足够的",
+        "proficient 熟练的"
+      ]
+    },
+    {
+      "en": "emotional",
+      "phonetic": "/ɪˈməʊʃənəl/",
+      "pos": "adj.",
+      "zh": "情感的；情绪的",
+      "sentence": "Watching that movie was emotional, and I cried at the end.",
+      "sentence_zh": "看那部电影很感人，结尾我哭了。",
+      "roots": "e-（出）+ mot（动）+ -ion + -al → 心里动出来的 → 情感的",
+      "hook": "motion 动作 / motor 马达：同一个 mot「动」",
+      "family": [
+        "emotion 情感",
+        "promote 促进"
+      ]
+    },
+    {
+      "en": "establish",
+      "phonetic": "/ɪˈstæblɪʃ/",
+      "pos": "v.",
+      "zh": "建立；确立",
+      "sentence": "The company was established in 2010 by two engineers.",
+      "sentence_zh": "这家公司是2010年由两位工程师创立的。",
+      "roots": "e- + stabl（稳）+ -ish（使）→ 使稳定 → 建立",
+      "hook": "stable 稳定的：同一个 stabl",
+      "family": [
+        "stability 稳定",
+        "stabilize 使稳定"
+      ]
+    },
+    {
+      "en": "executive",
+      "phonetic": "/ɪɡˈzekjətɪv/",
+      "pos": "n.",
+      "zh": "主管；高管",
+      "sentence": "The executive team will meet next week to discuss the budget.",
+      "sentence_zh": "高管团队下周开会讨论预算。",
+      "roots": "ex-（出）+ (s)ecu（跟随）+ -tive → 把事情跟到底的人 → 执行者；主管",
+      "hook": "second 第二：拉丁语 secundus「跟在后面」，同一个词根",
+      "family": [
+        "execute 执行",
+        "consecutive 连续的",
+        "sequence 顺序"
+      ]
+    },
+    {
+      "en": "figure",
+      "phonetic": "/ˈfɪɡə/",
+      "pos": "n./v.",
+      "zh": "数字；人物；认为",
+      "sentence": "I can't figure out why the printer stopped working.",
+      "sentence_zh": "我想不通打印机为什么不工作了。",
+      "roots": "fig（塑造；捏成形）+ -ure → 捏出来的形状 → 人物；数字",
+      "hook": "fiction 小说：同一个词根「塑造、编出来」",
+      "family": [
+        "configure 配置",
+        "fiction 小说"
+      ]
+    },
+    {
+      "en": "financial",
+      "phonetic": "/fəˈnænʃəl/",
+      "pos": "adj.",
+      "zh": "财务的；金融的",
+      "sentence": "Many families need better financial advice before buying a house.",
+      "sentence_zh": "很多家庭在买房前需要更好的财务建议。",
+      "roots": "fin（结束 → 把债了结）+ -ance + -ial → 财务的",
+      "hook": "final / finish 结束：同一个 fin",
+      "family": [
+        "finance 金融",
+        "define 下定义"
+      ]
+    },
+    {
+      "en": "identify",
+      "phonetic": "/aɪˈdentɪfaɪ/",
+      "pos": "v.",
+      "zh": "识别；确定",
+      "sentence": "Doctors can identify the problem by checking your blood.",
+      "sentence_zh": "医生可以通过检查血液找出问题所在。",
+      "roots": "ident（相同）+ -ify（使）→ 确认是同一个 → 识别",
+      "hook": "ID card 身份证 = identity",
+      "family": [
+        "identity 身份",
+        "identical 完全相同的"
+      ]
+    },
+    {
+      "en": "impact",
+      "phonetic": "/ˈɪmpækt/",
+      "pos": "n./v.",
+      "zh": "影响；冲击",
+      "sentence": "Social media can have a big impact on teenagers.",
+      "sentence_zh": "社交媒体会对青少年产生很大影响。",
+      "roots": "im-（进入）+ pact（压紧；钉住）→ 撞进去 → 冲击；影响",
+      "family": [
+        "compact 紧凑的"
+      ]
+    },
+    {
+      "en": "individual",
+      "phonetic": "/ˌɪndɪˈvɪdʒuəl/",
+      "pos": "adj./n.",
+      "zh": "个人的；个体",
+      "sentence": "Each individual student has a different learning style.",
+      "sentence_zh": "每个学生的学习风格都不同。",
+      "roots": "in-（不）+ divid（分开）+ -ual → 不能再分的 → 个体；个人的",
+      "hook": "divide 分开：同一个 divid",
+      "family": [
+        "divide 分开",
+        "division 分配"
+      ]
+    },
+    {
+      "en": "innovative",
+      "phonetic": "/ˈɪnəveɪtɪv/",
+      "pos": "adj.",
+      "zh": "创新的",
+      "sentence": "The team came up with an innovative idea to save water.",
+      "sentence_zh": "团队想出了一个创新的节水办法。",
+      "roots": "in-（进入）+ nov（新）+ -ative（…的）→ 带来新东西的 → 创新的",
+      "hook": "new 新：nov ↔ new，u/v/w 互换，真同源",
+      "family": [
+        "innovation 创新",
+        "novel 新奇的",
+        "renovate 翻新"
+      ]
+    },
+    {
+      "en": "invest",
+      "phonetic": "/ɪnˈvest/",
+      "pos": "v.",
+      "zh": "投资；投入",
+      "sentence": "Many people invest their savings in stocks and funds.",
+      "sentence_zh": "很多人把积蓄投资到股票和基金中。",
+      "roots": "in-（进入）+ vest（衣服）→ 给钱穿上新衣服（换成别的形式）→ 投资",
+      "hook": "vest 背心",
+      "family": [
+        "investment 投资"
+      ]
+    },
+    {
+      "en": "labor",
+      "phonetic": "/ˈleɪbə/",
+      "pos": "n.",
+      "zh": "劳动力；劳动",
+      "sentence": "The factory needs more labor to finish the order on time.",
+      "sentence_zh": "工厂需要更多劳动力才能按时完成订单。",
+      "roots": "labor（劳动）",
+      "hook": "lab / laboratory 实验室：干活的地方",
+      "family": [
+        "laboratory 实验室",
+        "collaborate 合作",
+        "elaborate 精心制作的"
+      ]
+    },
+    {
+      "en": "landscape",
+      "phonetic": "/ˈlændskeɪp/",
+      "pos": "n.",
+      "zh": "景观；格局",
+      "sentence": "The landscape near the lake looks beautiful in autumn.",
+      "sentence_zh": "秋天湖边的景观非常美。",
+      "roots": "land（土地）+ -scape（景象，= -ship）→ 土地的样子 → 风景",
+      "hook": "land 土地",
+      "family": [
+        "seascape 海景",
+        "cityscape 城市景观"
+      ]
+    },
+    {
+      "en": "occasional",
+      "phonetic": "/əˈkeɪʒənəl/",
+      "pos": "adj.",
+      "zh": "偶尔的",
+      "sentence": "I only go to the gym on occasional weekends.",
+      "sentence_zh": "我只是偶尔在周末去健身房。",
+      "roots": "oc-（= ob，朝）+ cas（落下）+ -ion + -al → 偶然落下来的 → 偶尔的",
+      "hook": "case 事件、情况：同一个 cas「落下」",
+      "family": [
+        "casual 随意的",
+        "accident 意外（cid = cad，元音互换）"
+      ]
+    },
+    {
+      "en": "overall",
+      "phonetic": "/ˌəʊvərˈɔːl/",
+      "pos": "adj.",
+      "zh": "总体的；全面的",
+      "sentence": "Overall, the trip was fun, although the weather was cold.",
+      "sentence_zh": "总的来说这次旅行很有趣，虽然天气有点冷。",
+      "roots": "over（覆盖）+ all（全部）→ 全部覆盖 → 总体的",
+      "hook": "over / all"
+    },
+    {
+      "en": "particular",
+      "phonetic": "/pəˈtɪkjələ/",
+      "pos": "adj.",
+      "zh": "特别的；特定的",
+      "sentence": "She has a particular interest in ancient history.",
+      "sentence_zh": "她对古代历史有一种特别的兴趣。",
+      "roots": "part（部分）+ -icul（小）+ -ar → 一小部分的 → 特定的；特别的",
+      "hook": "part 部分",
+      "family": [
+        "particle 微粒",
+        "partial 部分的"
+      ]
+    },
+    {
+      "en": "policy",
+      "phonetic": "/ˈpɒləsi/",
+      "pos": "n.",
+      "zh": "政策；方针",
+      "sentence": "The school changed its policy on late homework.",
+      "sentence_zh": "学校改变了迟交作业的政策。",
+      "roots": "poli（城邦，希腊语 polis）+ -cy → 城邦的管理方法 → 政策",
+      "hook": "police 警察：管理城邦的人",
+      "family": [
+        "political 政治的",
+        "police 警察"
+      ]
+    },
+    {
+      "en": "pressure",
+      "phonetic": "/ˈpreʃə/",
+      "pos": "n.",
+      "zh": "压力",
+      "sentence": "Many students feel pressure before final exams.",
+      "sentence_zh": "很多学生在期末考试前感到压力。",
+      "roots": "press（压）+ -ure（名词）→ 压力",
+      "hook": "press 按、压",
+      "family": [
+        "express 表达（压出来）",
+        "impress 给人印象（压进去）",
+        "depress 使沮丧（往下压）"
+      ]
+    },
+    {
+      "en": "previous",
+      "phonetic": "/ˈpriːviəs/",
+      "pos": "adj.",
+      "zh": "以前的；先前的",
+      "sentence": "My previous job was in a bank, but now I work online.",
+      "sentence_zh": "我以前在银行工作，现在改做网络工作了。",
+      "roots": "pre-（之前）+ vi（路）+ -ous → 走在前面的 → 以前的",
+      "hook": "via 经由（via email）：同一个 vi「路」",
+      "family": [
+        "obvious 明显的（就在路上挡着）",
+        "trivial 琐碎的（三岔路口的闲聊）"
+      ]
+    },
+    {
+      "en": "process",
+      "phonetic": "/ˈprəʊses/",
+      "pos": "n./v.",
+      "zh": "过程；处理",
+      "sentence": "Learning a new language is a slow process.",
+      "sentence_zh": "学习一门新语言是个慢慢来的过程。",
+      "roots": "pro-（向前）+ cess（走）→ 往前走 → 过程；处理",
+      "hook": "success 成功：同一个 cess「走」",
+      "family": [
+        "proceed 继续进行",
+        "access 进入",
+        "success 成功"
+      ]
+    },
+    {
+      "en": "specific",
+      "phonetic": "/spəˈsɪfɪk/",
+      "pos": "adj.",
+      "zh": "具体的；特定的",
+      "sentence": "Please give me a specific example of your idea.",
+      "sentence_zh": "请给我一个你这个想法的具体例子。",
+      "roots": "spec（看；种类）+ -ific（使…的）→ 看得清楚的 → 具体的；特定的",
+      "hook": "special 特别的：同一个 spec",
+      "family": [
+        "species 物种",
+        "specify 具体说明"
+      ]
+    },
+    {
+      "en": "strategy",
+      "phonetic": "/ˈstrætədʒi/",
+      "pos": "n.",
+      "zh": "战略；策略",
+      "sentence": "Our strategy is to focus on quality rather than price.",
+      "sentence_zh": "我们的策略是注重质量，而不是价格。",
+      "roots": "strat（军队）+ egy（= ag，带领）→ 带兵的方法 → 战略",
+      "family": [
+        "strategic 战略的"
+      ]
+    },
+    {
+      "en": "term",
+      "phonetic": "/tɜːm/",
+      "pos": "n.",
+      "zh": "期限；术语；条款",
+      "sentence": "The contract has several terms that you should read carefully.",
+      "sentence_zh": "这份合同有几条条款，你应该仔细读。",
+      "roots": "term（界限）→ 时间的界限 → 期限；话语的界限 → 术语",
+      "hook": "terminal 终点站",
+      "family": [
+        "determine 决定",
+        "terminate 终止"
+      ]
+    },
+    {
+      "en": "threaten",
+      "phonetic": "/ˈθretən/",
+      "pos": "v.",
+      "zh": "威胁；有…的危险",
+      "sentence": "Heavy rain threatened to ruin our picnic plans.",
+      "sentence_zh": "大雨差点毁了我们的野餐计划。"
+    },
+    {
+      "en": "trend",
+      "phonetic": "/trend/",
+      "pos": "n.",
+      "zh": "趋势",
+      "sentence": "Short videos are a growing trend among young people.",
+      "sentence_zh": "短视频是年轻人中越来越流行的趋势。"
+    }
   ]
 }

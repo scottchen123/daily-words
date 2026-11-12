@@ -2,61 +2,397 @@
   "date": "2026-11-10",
   "title": "第2组 Set 2",
   "words": [
-    { "en": "achieve", "phonetic": "/əˈtʃiːv/", "pos": "v.", "zh": "实现；达到",
-      "sentence": "She worked hard and finally achieved her goal of running a marathon.", "sentence_zh": "她努力工作，最终实现了跑完马拉松的目标。" },
-    { "en": "affect", "phonetic": "/əˈfekt/", "pos": "v.", "zh": "影响",
-      "sentence": "Lack of sleep can affect your mood and your memory.", "sentence_zh": "睡眠不足会影响你的心情和记忆力。" },
-    { "en": "approach", "phonetic": "/əˈprəʊtʃ/", "pos": "v./n.", "zh": "接近；方法；途径",
-      "sentence": "The teacher used a new approach to explain difficult math problems.", "sentence_zh": "老师用一种新方法来讲解难懂的数学题。" },
-    { "en": "climate", "phonetic": "/ˈklaɪmət/", "pos": "n.", "zh": "气候；氛围",
-      "sentence": "The climate in this city is mild and rainy in spring.", "sentence_zh": "这座城市的气候在春天温和多雨。" },
-    { "en": "contribute", "phonetic": "/kənˈtrɪbjuːt/", "pos": "v.", "zh": "贡献；促成",
-      "sentence": "Many volunteers contribute their time to help the local community.", "sentence_zh": "很多志愿者贡献时间，帮助当地社区。" },
-    { "en": "critical", "phonetic": "/ˈkrɪtɪkəl/", "pos": "adj.", "zh": "关键的；批评的",
-      "sentence": "Good communication is critical to the success of any team.", "sentence_zh": "良好的沟通对任何团队的成功都至关重要。" },
-    { "en": "effective", "phonetic": "/ɪˈfektɪv/", "pos": "adj.", "zh": "有效的",
-      "sentence": "This medicine is effective for treating most common colds.", "sentence_zh": "这种药对治疗大多数普通感冒有效。" },
-    { "en": "involve", "phonetic": "/ɪnˈvɒlv/", "pos": "v.", "zh": "涉及；牵涉；包含",
-      "sentence": "The new project will involve people from several different departments.", "sentence_zh": "这个新项目将涉及几个不同部门的人。" },
-    { "en": "neglect", "phonetic": "/nɪˈɡlekt/", "pos": "v./n.", "zh": "忽视；疏忽",
-      "sentence": "Parents should not neglect their children's emotional needs.", "sentence_zh": "父母不应该忽视孩子的情感需求。" },
-    { "en": "political", "phonetic": "/pəˈlɪtɪkəl/", "pos": "adj.", "zh": "政治的",
-      "sentence": "Our textbook explains the political system of several countries in detail.", "sentence_zh": "我们的教材详细介绍了几个国家的政治制度。" },
-    { "en": "potential", "phonetic": "/pəˈtenʃəl/", "pos": "adj./n.", "zh": "潜在的；潜力",
-      "sentence": "Young players with great potential often train hard every day.", "sentence_zh": "有很大潜力的年轻球员通常每天都刻苦训练。" },
-    { "en": "predict", "phonetic": "/prɪˈdɪkt/", "pos": "v.", "zh": "预测",
-      "sentence": "Scientists can predict the weather more accurately than before.", "sentence_zh": "科学家现在能比以前更准确地预测天气。" },
-    { "en": "promote", "phonetic": "/prəˈməʊt/", "pos": "v.", "zh": "促进；宣传；提升",
-      "sentence": "The store will promote its new products with a big sale.", "sentence_zh": "商店将通过大型促销活动推广新产品。" },
-    { "en": "psychological", "phonetic": "/ˌsaɪkəˈlɒdʒɪkəl/", "pos": "adj.", "zh": "心理的",
-      "sentence": "Stress can have a serious psychological effect on people.", "sentence_zh": "压力会对人产生严重的心理影响。" },
-    { "en": "psychologist", "phonetic": "/saɪˈkɒlədʒɪst/", "pos": "n.", "zh": "心理学家",
-      "sentence": "The psychologist helped him understand why he felt anxious.", "sentence_zh": "心理学家帮他理解了自己为什么感到焦虑。" },
-    { "en": "raise", "phonetic": "/reɪz/", "pos": "v.", "zh": "提高；提出；筹集",
-      "sentence": "The school decided to raise money for a new library.", "sentence_zh": "学校决定筹集资金建一座新图书馆。" },
-    { "en": "recommend", "phonetic": "/ˌrekəˈmend/", "pos": "v.", "zh": "建议；推荐",
-      "sentence": "I recommend this book to anyone who loves history.", "sentence_zh": "我把这本书推荐给每一个喜欢历史的人。" },
-    { "en": "regulation", "phonetic": "/ˌreɡjəˈleɪʃən/", "pos": "n.", "zh": "法规；管理",
-      "sentence": "The government has introduced new regulations for food safety.", "sentence_zh": "政府为食品安全出台了新的法规。" },
-    { "en": "relate", "phonetic": "/rɪˈleɪt/", "pos": "v.", "zh": "（与…）有关；联系",
-      "sentence": "Many people relate to the main character's struggle in the story.", "sentence_zh": "很多人能与故事主人公的挣扎产生共鸣。" },
-    { "en": "relative", "phonetic": "/ˈrelətɪv/", "pos": "n./adj.", "zh": "亲戚；相对的",
-      "sentence": "My relative lives in Canada, and I visit her every year.", "sentence_zh": "我的一位亲戚住在加拿大，我每年都去看她。" },
-    { "en": "represent", "phonetic": "/ˌreprɪˈzent/", "pos": "v.", "zh": "代表；相当于",
-      "sentence": "This painting represents the beauty of nature in autumn.", "sentence_zh": "这幅画展现了秋天自然的美。" },
-    { "en": "responsibility", "phonetic": "/rɪˌspɒnsəˈbɪləti/", "pos": "n.", "zh": "责任；职责",
-      "sentence": "Every employee has the responsibility to protect company data.", "sentence_zh": "每位员工都有责任保护公司的数据。" },
-    { "en": "struggle", "phonetic": "/ˈstrʌɡəl/", "pos": "n./v.", "zh": "斗争；努力；挣扎",
-      "sentence": "Many students struggle with managing their time during exams.", "sentence_zh": "很多学生在考试期间难以管理好时间。" },
-    { "en": "subtle", "phonetic": "/ˈsʌtəl/", "pos": "adj.", "zh": "微妙的；细微的",
-      "sentence": "The change in her voice was subtle, but I still noticed it.", "sentence_zh": "她声音里的变化很细微，但我还是注意到了。" },
-    { "en": "trade", "phonetic": "/treɪd/", "pos": "n.", "zh": "行业；贸易",
-      "sentence": "Trade between the two countries has grown quickly in recent years.", "sentence_zh": "近年来两国之间的贸易增长很快。" },
-    { "en": "unrealistic", "phonetic": "/ˌʌnrɪəˈlɪstɪk/", "pos": "adj.", "zh": "不切实际的",
-      "sentence": "Setting unrealistic goals can make you feel like a failure.", "sentence_zh": "设定不切实际的目标会让你觉得自己失败了。" },
-    { "en": "various", "phonetic": "/ˈveəriəs/", "pos": "adj.", "zh": "各种各样的",
-      "sentence": "The museum displays various objects from ancient China.", "sentence_zh": "博物馆展出了来自古代中国的各种文物。" },
-    { "en": "attract", "phonetic": "/əˈtrækt/", "pos": "v.", "zh": "吸引",
-      "sentence": "The bright colors of the flowers attract many bees.", "sentence_zh": "花朵鲜艳的颜色吸引了许多蜜蜂。" }
+    {
+      "en": "achieve",
+      "phonetic": "/əˈtʃiːv/",
+      "pos": "v.",
+      "zh": "实现；达到",
+      "sentence": "She worked hard and finally achieved her goal of running a marathon.",
+      "sentence_zh": "她努力工作，最终实现了跑完马拉松的目标。",
+      "roots": "a-（= ad，到）+ chieve（= chief，头）→ 做到头 → 完成；达到",
+      "hook": "chief 首领 / chef 主厨：都来自拉丁语 caput「头」",
+      "family": [
+        "achievement 成就",
+        "mischief 恶作剧（mis 坏 + chief 结果）"
+      ]
+    },
+    {
+      "en": "affect",
+      "phonetic": "/əˈfekt/",
+      "pos": "v.",
+      "zh": "影响",
+      "sentence": "Lack of sleep can affect your mood and your memory.",
+      "sentence_zh": "睡眠不足会影响你的心情和记忆力。",
+      "roots": "af-（= ad，对着）+ fect（= fac，做）→ 对…做 → 影响",
+      "hook": "fact 事实：fac ↔ fec，元音互换，同一个「做」",
+      "family": [
+        "effect 效果",
+        "infect 感染",
+        "perfect 完美的"
+      ]
+    },
+    {
+      "en": "approach",
+      "phonetic": "/əˈprəʊtʃ/",
+      "pos": "v./n.",
+      "zh": "接近；方法；途径",
+      "sentence": "The teacher used a new approach to explain difficult math problems.",
+      "sentence_zh": "老师用一种新方法来讲解难懂的数学题。",
+      "roots": "ap-（= ad，向）+ proach（= prope，靠近）→ 向…靠近",
+      "family": [
+        "approximate 大约的",
+        "proximity 接近"
+      ]
+    },
+    {
+      "en": "climate",
+      "phonetic": "/ˈklaɪmət/",
+      "pos": "n.",
+      "zh": "气候；氛围",
+      "sentence": "The climate in this city is mild and rainy in spring.",
+      "sentence_zh": "这座城市的气候在春天温和多雨。",
+      "roots": "clim（倾斜）+ -ate：古希腊人认为地面朝太阳的倾斜角度不同，所以各地气候不同",
+      "hook": "decline / incline 里的 clin「倾斜」：真同源",
+      "family": [
+        "incline 倾向于",
+        "decline 下降"
+      ]
+    },
+    {
+      "en": "contribute",
+      "phonetic": "/kənˈtrɪbjuːt/",
+      "pos": "v.",
+      "zh": "贡献；促成",
+      "sentence": "Many volunteers contribute their time to help the local community.",
+      "sentence_zh": "很多志愿者贡献时间，帮助当地社区。",
+      "roots": "con-（一起）+ tribut（给予；分配）→ 大家一起给 → 贡献",
+      "hook": "distribute 分配：dis（分开）+ tribut（给）",
+      "family": [
+        "distribute 分配",
+        "attribute 归因于",
+        "tribute 致敬"
+      ]
+    },
+    {
+      "en": "critical",
+      "phonetic": "/ˈkrɪtɪkəl/",
+      "pos": "adj.",
+      "zh": "关键的；批评的",
+      "sentence": "Good communication is critical to the success of any team.",
+      "sentence_zh": "良好的沟通对任何团队的成功都至关重要。",
+      "roots": "crit（判断）+ -ical（…的）→ 需要判断的 → 关键的；挑剔的",
+      "hook": "crisis 危机：要做判断、做决定的时刻",
+      "family": [
+        "criticize 批评",
+        "criterion 标准",
+        "crisis 危机"
+      ]
+    },
+    {
+      "en": "effective",
+      "phonetic": "/ɪˈfektɪv/",
+      "pos": "adj.",
+      "zh": "有效的",
+      "sentence": "This medicine is effective for treating most common colds.",
+      "sentence_zh": "这种药对治疗大多数普通感冒有效。",
+      "roots": "ef-（= ex，出）+ fect（做）+ -ive（…的）→ 能做出效果的",
+      "hook": "effect 效果 / fact 事实：同一个「做」",
+      "family": [
+        "efficient 高效的",
+        "perfect 完美的"
+      ]
+    },
+    {
+      "en": "involve",
+      "phonetic": "/ɪnˈvɒlv/",
+      "pos": "v.",
+      "zh": "涉及；牵涉；包含",
+      "sentence": "The new project will involve people from several different departments.",
+      "sentence_zh": "这个新项目将涉及几个不同部门的人。",
+      "roots": "in-（进入）+ volv（卷；转）→ 卷进去 → 涉及；牵涉",
+      "hook": "volume 卷；音量：古时候的书是一卷一卷的，同一个 vol「卷」",
+      "family": [
+        "revolve 旋转",
+        "evolve 进化",
+        "revolution 革命"
+      ]
+    },
+    {
+      "en": "neglect",
+      "phonetic": "/nɪˈɡlekt/",
+      "pos": "v./n.",
+      "zh": "忽视；疏忽",
+      "sentence": "Parents should not neglect their children's emotional needs.",
+      "sentence_zh": "父母不应该忽视孩子的情感需求。",
+      "roots": "neg-（不）+ lect（= leg，挑选；捡）→ 不去捡 → 忽视",
+      "hook": "collect 收集 / select 选择：同一个 lect",
+      "family": [
+        "collect 收集",
+        "select 选择",
+        "elect 选举"
+      ]
+    },
+    {
+      "en": "political",
+      "phonetic": "/pəˈlɪtɪkəl/",
+      "pos": "adj.",
+      "zh": "政治的",
+      "sentence": "Our textbook explains the political system of several countries in detail.",
+      "sentence_zh": "我们的教材详细介绍了几个国家的政治制度。",
+      "roots": "polit（城邦，希腊语 polis）+ -ical → 城邦事务的 → 政治的",
+      "hook": "police 警察：管理城邦的人",
+      "family": [
+        "police 警察",
+        "policy 政策",
+        "metropolis 大都市"
+      ]
+    },
+    {
+      "en": "potential",
+      "phonetic": "/pəˈtenʃəl/",
+      "pos": "adj./n.",
+      "zh": "潜在的；潜力",
+      "sentence": "Young players with great potential often train hard every day.",
+      "sentence_zh": "有很大潜力的年轻球员通常每天都刻苦训练。",
+      "roots": "pot（有能力）+ -ent + -ial → 有能力但还没发挥的 → 潜在的",
+      "hook": "possible 可能的：pos ↔ pot，德特斯互换，同一个「能」",
+      "family": [
+        "potent 强有力的",
+        "possible 可能的"
+      ]
+    },
+    {
+      "en": "predict",
+      "phonetic": "/prɪˈdɪkt/",
+      "pos": "v.",
+      "zh": "预测",
+      "sentence": "Scientists can predict the weather more accurately than before.",
+      "sentence_zh": "科学家现在能比以前更准确地预测天气。",
+      "roots": "pre-（提前）+ dict（说）→ 提前说 → 预测",
+      "hook": "dictionary 词典：同一个 dict「说」",
+      "family": [
+        "dictionary 词典",
+        "contradict 反驳",
+        "dictate 口述"
+      ]
+    },
+    {
+      "en": "promote",
+      "phonetic": "/prəˈməʊt/",
+      "pos": "v.",
+      "zh": "促进；宣传；提升",
+      "sentence": "The store will promote its new products with a big sale.",
+      "sentence_zh": "商店将通过大型促销活动推广新产品。",
+      "roots": "pro-（向前）+ mot（动）→ 往前推动 → 促进；提升",
+      "hook": "motor 马达 / motion 动作：同一个 mot「动」",
+      "family": [
+        "remote 遥远的（移开的）",
+        "emotion 情感（心里动出来）"
+      ]
+    },
+    {
+      "en": "psychological",
+      "phonetic": "/ˌsaɪkəˈlɒdʒɪkəl/",
+      "pos": "adj.",
+      "zh": "心理的",
+      "sentence": "Stress can have a serious psychological effect on people.",
+      "sentence_zh": "压力会对人产生严重的心理影响。",
+      "roots": "psycho（心灵）+ log（学问）+ -ical → 心理学的",
+      "hook": "biology 生物学：-logy = 学科",
+      "family": [
+        "psychology 心理学",
+        "psychologist 心理学家"
+      ]
+    },
+    {
+      "en": "psychologist",
+      "phonetic": "/saɪˈkɒlədʒɪst/",
+      "pos": "n.",
+      "zh": "心理学家",
+      "sentence": "The psychologist helped him understand why he felt anxious.",
+      "sentence_zh": "心理学家帮他理解了自己为什么感到焦虑。",
+      "roots": "psycho（心灵）+ log（学问）+ -ist（…的人）→ 研究心理的人",
+      "hook": "scientist 科学家：-ist = 人",
+      "family": [
+        "psychology 心理学",
+        "biologist 生物学家"
+      ]
+    },
+    {
+      "en": "raise",
+      "phonetic": "/reɪz/",
+      "pos": "v.",
+      "zh": "提高；提出；筹集",
+      "sentence": "The school decided to raise money for a new library.",
+      "sentence_zh": "学校决定筹集资金建一座新图书馆。",
+      "hook": "rise 上升：真同源，raise =「让…上升」",
+      "family": [
+        "rise 上升",
+        "rear 抚养"
+      ]
+    },
+    {
+      "en": "recommend",
+      "phonetic": "/ˌrekəˈmend/",
+      "pos": "v.",
+      "zh": "建议；推荐",
+      "sentence": "I recommend this book to anyone who loves history.",
+      "sentence_zh": "我把这本书推荐给每一个喜欢历史的人。",
+      "roots": "re-（加强）+ com-（加强）+ mend（= mand，交给）→ 郑重地交给 → 推荐",
+      "hook": "command 命令：同一个 mand",
+      "family": [
+        "commend 称赞",
+        "demand 要求"
+      ]
+    },
+    {
+      "en": "regulation",
+      "phonetic": "/ˌreɡjəˈleɪʃən/",
+      "pos": "n.",
+      "zh": "法规；管理",
+      "sentence": "The government has introduced new regulations for food safety.",
+      "sentence_zh": "政府为食品安全出台了新的法规。",
+      "roots": "reg（统治；尺子）+ -ul + -ation → 用尺子量 → 规章；管理",
+      "hook": "rule 规则 / regular 规则的：reg-ul 变成了 rule",
+      "family": [
+        "regular 规则的",
+        "region 区域",
+        "rule 规则"
+      ]
+    },
+    {
+      "en": "relate",
+      "phonetic": "/rɪˈleɪt/",
+      "pos": "v.",
+      "zh": "（与…）有关；联系",
+      "sentence": "Many people relate to the main character's struggle in the story.",
+      "sentence_zh": "很多人能与故事主人公的挣扎产生共鸣。",
+      "roots": "re-（回）+ lat（带）→ 带回来 → 把…联系起来",
+      "hook": "translate 翻译：trans（过去）+ lat（带）→ 把意思带过去",
+      "family": [
+        "relation 关系",
+        "relative 亲戚",
+        "translate 翻译"
+      ]
+    },
+    {
+      "en": "relative",
+      "phonetic": "/ˈrelətɪv/",
+      "pos": "n./adj.",
+      "zh": "亲戚；相对的",
+      "sentence": "My relative lives in Canada, and I visit her every year.",
+      "sentence_zh": "我的一位亲戚住在加拿大，我每年都去看她。",
+      "roots": "re-（回）+ lat（带）+ -ive → 互相联系的 → 相对的；亲戚",
+      "hook": "relate 联系",
+      "family": [
+        "relate 联系",
+        "relation 关系"
+      ]
+    },
+    {
+      "en": "represent",
+      "phonetic": "/ˌreprɪˈzent/",
+      "pos": "v.",
+      "zh": "代表；相当于",
+      "sentence": "This painting represents the beauty of nature in autumn.",
+      "sentence_zh": "这幅画展现了秋天自然的美。",
+      "roots": "re-（再）+ present（呈现）→ 再呈现一次 → 代表",
+      "hook": "present 呈现；礼物",
+      "family": [
+        "presentation 展示",
+        "representative 代表"
+      ]
+    },
+    {
+      "en": "responsibility",
+      "phonetic": "/rɪˌspɒnsəˈbɪləti/",
+      "pos": "n.",
+      "zh": "责任；职责",
+      "sentence": "Every employee has the responsibility to protect company data.",
+      "sentence_zh": "每位员工都有责任保护公司的数据。",
+      "roots": "re-（回）+ spons（承诺）+ -ible（能）+ -ity → 能回应承诺 → 责任",
+      "hook": "response 回应：同一个 spons",
+      "family": [
+        "respond 回应",
+        "sponsor 赞助商"
+      ]
+    },
+    {
+      "en": "struggle",
+      "phonetic": "/ˈstrʌɡəl/",
+      "pos": "n./v.",
+      "zh": "斗争；努力；挣扎",
+      "sentence": "Many students struggle with managing their time during exams.",
+      "sentence_zh": "很多学生在考试期间难以管理好时间。"
+    },
+    {
+      "en": "subtle",
+      "phonetic": "/ˈsʌtəl/",
+      "pos": "adj.",
+      "zh": "微妙的；细微的",
+      "sentence": "The change in her voice was subtle, but I still noticed it.",
+      "sentence_zh": "她声音里的变化很细微，但我还是注意到了。",
+      "roots": "sub-（在下面）+ tle（= tela，织布）→ 织得很细 → 微妙的；细微的",
+      "hook": "textile 纺织品：tela 来自 texere「织」",
+      "family": [
+        "subtlety 微妙"
+      ]
+    },
+    {
+      "en": "trade",
+      "phonetic": "/treɪd/",
+      "pos": "n.",
+      "zh": "行业；贸易",
+      "sentence": "Trade between the two countries has grown quickly in recent years.",
+      "sentence_zh": "近年来两国之间的贸易增长很快。",
+      "hook": "tread 踩：真同源，trade 原意是「走过的路」→ 来回走的生意路线",
+      "family": [
+        "tread 踩"
+      ]
+    },
+    {
+      "en": "unrealistic",
+      "phonetic": "/ˌʌnrɪəˈlɪstɪk/",
+      "pos": "adj.",
+      "zh": "不切实际的",
+      "sentence": "Setting unrealistic goals can make you feel like a failure.",
+      "sentence_zh": "设定不切实际的目标会让你觉得自己失败了。",
+      "roots": "un-（不）+ real（真实）+ -ist + -ic → 不真实的 → 不切实际的",
+      "hook": "real 真实的",
+      "family": [
+        "realize 意识到",
+        "reality 现实"
+      ]
+    },
+    {
+      "en": "various",
+      "phonetic": "/ˈveəriəs/",
+      "pos": "adj.",
+      "zh": "各种各样的",
+      "sentence": "The museum displays various objects from ancient China.",
+      "sentence_zh": "博物馆展出了来自古代中国的各种文物。",
+      "roots": "vari（变化）+ -ous（…的）→ 有变化的 → 各种各样的",
+      "hook": "variety 多样：同一个 vari",
+      "family": [
+        "vary 变化",
+        "variety 多样",
+        "variable 可变的"
+      ]
+    },
+    {
+      "en": "attract",
+      "phonetic": "/əˈtrækt/",
+      "pos": "v.",
+      "zh": "吸引",
+      "sentence": "The bright colors of the flowers attract many bees.",
+      "sentence_zh": "花朵鲜艳的颜色吸引了许多蜜蜂。",
+      "roots": "at-（= ad，向）+ tract（拉）→ 拉过来 → 吸引",
+      "hook": "tractor 拖拉机：同一个 tract「拉」",
+      "family": [
+        "distract 使分心",
+        "extract 提取",
+        "contract 合同"
+      ]
+    }
   ]
 }
