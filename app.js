@@ -116,6 +116,176 @@
     return b;
   }
 
+  // ---------- 📝 my notes: own sentence + note + 一句话串记; optionally synced to GitHub (notes/notes.json) ----------
+  // Local: dw.notes = { key: { s, n, c, sync, t, synced } }. Repo: notes/notes.json = { version: 1, notes: { key: { s, n, c, t } } }.
+  var notes = store.get("notes", {});
+  var remoteNotes = {}; // from data.json (built from notes/notes.json), refreshed by a sync
+  var noteOpen = null;  // key of the word whose note editor is open
+  var gh = { token: store.get("ghToken", ""), busy: false, msg: "" };
+  var REPO = (function () {
+    var h = location.hostname.match(/^([a-z0-9-]+)\.github\.io$/i), p = location.pathname.split("/")[1];
+    return h && p ? h[1] + "/" + p : "skot-chen/daily-words";
+  })();
+  var NOTES_PATH = "notes/notes.json";
+  function hasText(n) { return !!(n && (n.s || n.n || n.c)); }
+  function noteByKey(k) {
+    var l = notes[k], r = remoteNotes[k];
+    if (l && r) return (r.t || "") > (l.t || "") ? r : l; // newer one wins (edited on another device)
+    return l || r || null;
+  }
+  function noteOf(w) { var n = noteByKey(key(w)); return hasText(n) ? n : null; }
+  function noteKeys() { var o = {}; Object.keys(notes).concat(Object.keys(remoteNotes)).forEach(function (k) { o[k] = 1; }); return Object.keys(o); }
+  function chainsFor(w) { // 一句话串记 written on OTHER words that also use this word
+    var re = new RegExp("\\b" + escRe(w.en.trim()) + "\\b", "i"), me = key(w), out = [];
+    noteKeys().forEach(function (k) { var n = noteByKey(k); if (k !== me && n && n.c && re.test(n.c)) out.push({ k: k, c: n.c }); });
+    return out;
+  }
+  function boldWords(text) { // bold every word of the word list inside a sentence
+    return String(text).split(/([A-Za-z][A-Za-z'-]*)/).map(function (p, i) {
+      return i % 2 && byKeyAll[p.toLowerCase()] ? el("b", null, p) : p;
+    });
+  }
+  function noteStatus(k) {
+    var l = notes[k];
+    if (!l || (remoteNotes[k] && (remoteNotes[k].t || "") > (l.t || ""))) return "☁ 来自 GitHub";
+    if (!l.sync) return "📱 只在本机 This device";
+    return l.synced === l.t ? "☁ 已同步 Synced" : "⏳ 待同步 Not synced yet";
+  }
+  function noteBox(w) {
+    var n = noteOf(w), others = chainsFor(w);
+    if (!n && !others.length) return null;
+    return el("div", { class: "note" },
+      el("div", { class: "note-h" }, "📝 我的笔记 My notes", n ? el("small", { "data-note": key(w) }, noteStatus(key(w))) : null),
+      n && n.s ? el("div", null, el("span", { class: "k" }, "✍ 造句 "), boldWords(n.s)) : null,
+      n && n.n ? el("div", null, el("span", { class: "k" }, "💬 备注 "), n.n) : null,
+      n && n.c ? el("div", null, el("span", { class: "k" }, "🔗 串记 "), boldWords(n.c)) : null,
+      others.map(function (o) { return el("div", { class: "muted" }, el("span", { class: "k" }, "🔗 也在串记里 (" + o.k + ") "), boldWords(o.c)); }));
+  }
+  function noteBtn(w) {
+    return el("button", { class: "btn", type: "button", "aria-pressed": String(noteOpen === key(w)),
+      onclick: function () { noteOpen = noteOpen === key(w) ? null : key(w); render(); } },
+      noteOf(w) ? "📝 改笔记 Edit note" : "📝 写笔记 Add note");
+  }
+  function noteEditor(w) {
+    if (noteOpen !== key(w)) return null;
+    var k = key(w), n = noteByKey(k) || {}, l = notes[k];
+    function area(cls, val, ph) { var t = el("textarea", { class: cls, rows: 2, placeholder: ph }); t.value = val || ""; return t; }
+    var s = area("n-s", n.s, "✍ 用 " + w.en + " 造一个自己的句子 Your own sentence…");
+    var nt = area("n-n", n.n, "💬 备注：用法、搭配、易混词… Note: usage, collocations…");
+    var c = area("n-c", n.c, "🔗 一句话串记：把几个单词串成一句话，例如 I estimate the crop will cope with the harm.");
+    var sync = el("input", { type: "checkbox", checked: l ? !!l.sync : true });
+    function close() { noteOpen = null; render(); }
+    return el("div", { class: "note-edit" },
+      el("div", { class: "note-h" }, "📝 我的笔记 My notes — " + w.en),
+      s, nt, c,
+      el("label", { class: "check" }, sync, "☁ 同步到 GitHub（手机、电脑都能看到）Sync to GitHub"),
+      gh.token ? null : el("p", { class: "muted" }, "还没连接 GitHub：先保存在本机，到页面最下面「☁ 笔记同步」粘贴钥匙后会自动上传。"),
+      el("div", { class: "tools" },
+        el("button", { class: "btn primary", type: "button", onclick: function () {
+          saveNote(w, { s: s.value.trim(), n: nt.value.trim(), c: c.value.trim(), sync: sync.checked }); close(); syncNotes();
+        } }, "💾 保存 Save"),
+        el("button", { class: "btn", type: "button", onclick: close }, "✕ 取消 Cancel"),
+        hasText(n) ? el("button", { class: "btn", type: "button", onclick: function () {
+          if (!confirm("删除这个词的笔记？Delete this note?")) return;
+          saveNote(w, { s: "", n: "", c: "", sync: !!(remoteNotes[k] || (l && (l.sync || l.synced))) }); close(); syncNotes();
+        } }, "🗑 删除 Delete") : null));
+  }
+  function saveNote(w, v) {
+    var k = key(w), old = notes[k] || {};
+    var n = { s: v.s, n: v.n, c: v.c, sync: v.sync, t: new Date().toISOString(), synced: old.synced || null };
+    if (!hasText(n) && !n.synced && !remoteNotes[k]) delete notes[k]; // nothing anywhere to remove
+    else notes[k] = n;
+    store.set("notes", notes);
+  }
+  function pendingKeys() {
+    return Object.keys(notes).filter(function (k) { var n = notes[k]; return n.sync ? n.synced !== n.t : !!n.synced; });
+  }
+
+  // GitHub Contents API, with the user's own fine-grained token (only stored in this browser).
+  function b64e(s) { return btoa(unescape(encodeURIComponent(s))); }
+  function b64d(s) { return decodeURIComponent(escape(atob(s.replace(/\s/g, "")))); }
+  function ghFetch(path, method, body) {
+    return fetch("https://api.github.com/repos/" + REPO + path, { method: method || "GET", cache: "no-store",
+      headers: { Authorization: "Bearer " + gh.token, Accept: "application/vnd.github+json" },
+      body: body ? JSON.stringify(body) : undefined });
+  }
+  function ghError(e) {
+    var s = e && e.status;
+    if (s === 401) return "✗ 钥匙无效或已过期 Token invalid or expired.";
+    if (s === 403 || s === 404) return "✗ 钥匙没有写入 " + REPO + " 的权限（要选 Contents: Read and write）。";
+    return "✗ 同步失败（网络？）稍后会再试。Sync failed, will retry. " + (s || "");
+  }
+  function setSyncMsg(m) { gh.msg = m; var x = document.getElementById("sync-msg"); if (x) x.textContent = m; }
+  function syncNotes(manual, retry) {
+    if (!gh.token || gh.busy) return Promise.resolve();
+    var todo = pendingKeys();
+    gh.busy = true; setSyncMsg("⏳ 正在同步… Syncing…");
+    var sha = null, file = { version: 1, notes: {} }, changed = 0;
+    return ghFetch("/contents/" + NOTES_PATH + "?ref=main").then(function (r) {
+      if (r.status === 404) return null;
+      if (!r.ok) throw r;
+      return r.json();
+    }).then(function (j) {
+      if (j) { sha = j.sha; var f = JSON.parse(b64d(j.content)); if (f && f.notes) file = f; }
+      todo.forEach(function (k) {
+        var n = notes[k], r = file.notes[k];
+        if (r && (r.t || "") > (n.t || "")) return; // the repo has a newer edit from another device
+        if (n.sync && hasText(n)) { file.notes[k] = { s: n.s, n: n.n, c: n.c, t: n.t }; changed++; }
+        else if (r) { delete file.notes[k]; changed++; }
+      });
+      if (!changed) return null;
+      return ghFetch("/contents/" + NOTES_PATH, "PUT", { message: "Update my notes (" + changed + ")", branch: "main",
+        content: b64e(JSON.stringify(file, null, 2) + "\n"), sha: sha || undefined }).then(function (r) { if (!r.ok) throw r; });
+    }).then(function () {
+      todo.forEach(function (k) { var n = notes[k]; n.synced = n.sync ? n.t : null; if (!hasText(n)) delete notes[k]; });
+      store.set("notes", notes);
+      remoteNotes = file.notes;
+      gh.busy = false;
+      setSyncMsg("✓ 已同步 Synced " + new Date().toTimeString().slice(0, 5) + (changed ? "（上传了 " + changed + " 条，网站约 1 分钟后更新）" : ""));
+      document.querySelectorAll("[data-note]").forEach(function (x) { x.textContent = noteStatus(x.getAttribute("data-note")); });
+      if (manual || (!quiz && !noteOpen)) render();
+    }).catch(function (e) {
+      gh.busy = false;
+      if (e && (e.status === 409 || e.status === 422) && !retry) return syncNotes(manual, true); // someone pushed meanwhile
+      setSyncMsg(ghError(e));
+    });
+  }
+  window.addEventListener("online", function () { if (pendingKeys().length) syncNotes(); });
+
+  function renderSyncBox() {
+    var tokenIn = el("input", { type: "password", class: "token", autocomplete: "off", placeholder: "github_pat_…",
+      "aria-label": "GitHub token 钥匙" });
+    var local = Object.keys(notes).filter(function (k) { return hasText(notes[k]); }).length;
+    return el("details", { class: "progress-box" },
+      el("summary", null, "☁ 笔记同步 Notes sync" + (pendingKeys().length ? "（⏳ " + pendingKeys().length + " 条待同步）" : "")),
+      el("p", null, "勾选「同步到 GitHub」的笔记会保存到仓库 " + REPO + " 的 " + NOTES_PATH + "，换手机或电脑打开网站也能看到。" +
+        "没勾选的只存在这个浏览器里。现在本机有 " + local + " 条笔记。"),
+      gh.token ? [
+        el("p", null, "✓ 已连接 GitHub。Connected."),
+        el("div", { class: "tools" },
+          el("button", { class: "btn primary", type: "button", onclick: function () { syncNotes(true); } }, "🔄 现在同步 Sync now"),
+          el("button", { class: "btn", type: "button", onclick: function () {
+            if (!confirm("在这个浏览器里删掉钥匙？笔记不会被删除。Forget the token on this device?")) return;
+            gh.token = ""; store.set("ghToken", ""); setSyncMsg(""); renderFooter(); render();
+          } }, "🔑 删掉钥匙 Forget token"))
+      ] : [
+        el("p", null, "第一次使用（每台设备做一次）：① 打开 ",
+          el("a", { href: "https://github.com/settings/personal-access-tokens/new", target: "_blank", rel: "noopener" }, "GitHub → 新建钥匙 (fine-grained token)"),
+          "；② Repository access 选 Only select repositories → " + REPO + "；③ Permissions → Contents 选 Read and write；④ 生成后复制，粘贴到下面，点「连接」。" +
+          "钥匙只保存在这个浏览器里，不会上传。"),
+        el("div", { class: "tools" }, tokenIn,
+          el("button", { class: "btn primary", type: "button", onclick: function () {
+            var t = tokenIn.value.trim(); if (!t) return;
+            gh.token = t; setSyncMsg("⏳ 检查钥匙… Checking…");
+            ghFetch("").then(function (r) { if (!r.ok) throw r; return r.json(); }).then(function (j) {
+              if (!j.permissions || !j.permissions.push) throw { status: 403 };
+              store.set("ghToken", t); renderFooter(); syncNotes(true);
+            }).catch(function (e) { gh.token = ""; setSyncMsg(ghError(e)); });
+          } }, "🔗 连接 Connect"))
+      ],
+      el("p", { class: "muted", id: "sync-msg" }, gh.msg));
+  }
+
   // ---------- state ----------
   var days = [], allWords = [];
   var app = document.getElementById("app");
@@ -208,6 +378,7 @@
       else if (en.indexOf(q) > 0) s = 60;
       else if (w.zh.indexOf(q) >= 0) s = 70;
       else if (q.length >= 4 && (w.family || []).some(function (f) { return norm(f).indexOf(q) >= 0; })) s = 30;
+      else if (q.length >= 2 && noteOf(w) && [noteOf(w).s, noteOf(w).n, noteOf(w).c].join(" ").toLowerCase().indexOf(q) >= 0) s = 20;
       if (s) scored.push({ w: w, s: s });
     });
     scored.sort(function (a, b) { return b.s - a.s || a.w.en.length - b.w.en.length; });
@@ -236,7 +407,10 @@
       el("div", null, w.pos ? el("span", { class: "pos" }, w.pos) : null, w.zh),
       el("div", { class: "muted" }, (d ? d.date + (d.title ? " · " + d.title : "") + "  ·  " : "") + statusOf(w)),
       sentenceBox(w, true),
-      rootsBox(w));
+      rootsBox(w),
+      noteBox(w),
+      noteEditor(w),
+      noteOpen === key(w) ? null : el("div", { class: "tools" }, noteBtn(w)));
   }
   function renderSearch() {
     var r = findWords(searchQ), list = r.hits.length ? r.hits : r.close;
@@ -330,6 +504,7 @@
     }, 250);
   }
   function next() {
+    noteOpen = null;
     quiz.pos++;
     quiz.revealed = quiz.checked = quiz.hint = quiz.sentence = quiz.roots = false;
     quiz.answer = "";
@@ -362,13 +537,14 @@
   // ---------- going back to finished words ----------
   function canGoBack() { return quiz.pos - quiz.back > 0; }
   function goBack() {
+    noteOpen = null;
     if (!canGoBack()) return;
     var i = document.getElementById("answer");
     if (quiz.back === 0 && i && !quiz.checked) quiz.answer = i.value; // keep what was typed
     quiz.back++;
     render();
   }
-  function goForward() { if (quiz.back > 0) { quiz.back--; render(); } }
+  function goForward() { noteOpen = null; if (quiz.back > 0) { quiz.back--; render(); } }
   function prevBtn() {
     return canGoBack() ? el("button", { class: "btn", type: "button", onclick: goBack }, "← Previous 上一个") : null;
   }
@@ -409,6 +585,8 @@
       el("div", { class: "word" }, w.en, speakBtn(w)),
       w.phonetic ? el("div", { class: "phon" }, w.phonetic) : null,
       el("div", { class: "meaning" }, w.pos ? el("span", { class: "pos" }, w.pos) : null, w.zh),
+      noteEditor(w),
+      noteBox(w),
       sentenceBox(w, true),
       rootsBox(w),
       r.rating ? [el("p", { class: "rate-q" }, "你选了（可以改）You chose — tap to change:"),
@@ -419,11 +597,11 @@
         }))]
         : "answer" in r ? el("div", { class: "feedback " + (r.ok ? "ok" : "no") },
             (r.ok ? "✓ Correct 正确 — you wrote 你写的: " : "✗ You wrote 你写的: "), el("b", null, r.answer)) : null,
-      el("div", { class: "tools" }, prevBtn(), favBtn(w),
+      el("div", { class: "tools" }, prevBtn(), favBtn(w), noteBtn(w),
         el("button", { class: "btn primary", type: "button", id: "forward", onclick: goForward },
           quiz.back > 1 ? "Next 下一个 →" : "Back to where I was 回到当前 →")),
       el("p", { class: "muted" }, "← → keys also work. 也可以用键盘左右方向键。")));
-    setTimeout(function () { var b = document.getElementById("forward"); if (b) b.focus(); }, 0);
+    setTimeout(function () { var b = document.getElementById("forward"); if (b && !noteOpen) b.focus(); }, 0);
   }
 
   // ---------- views ----------
@@ -476,10 +654,12 @@
           el("button", { class: "btn bad", type: "button", onclick: function () { rate("bad"); } }, "😕 不认识", el("kbd", null, "Forgot → 下一个")),
           el("button", { class: "btn mid", type: "button", onclick: function () { rate("unsure"); } }, "🤔 模糊", el("kbd", null, "Not sure → 下一个")),
           el("button", { class: "btn good", type: "button", onclick: function () { rate("good"); } }, "😀 认识", el("kbd", null, "Knew it → 下一个"))),
+        noteEditor(w),
+        noteBox(w),
         sentenceBox(w, true),
         rootsBox(w));
     }
-    body.push(el("div", { class: "tools" }, prevBtn(), favBtn(w)));
+    body.push(el("div", { class: "tools" }, prevBtn(), favBtn(w), quiz.revealed ? noteBtn(w) : null));
     add(app, el("section", { class: "card" }, body));
   }
 
@@ -521,9 +701,10 @@
         quiz.ok ? "✓ Correct! 正确！ " : "✗ Answer 答案: ",
         el("span", { class: "ans" }, w.en), " ", w.phonetic ? el("span", { class: "phon" }, w.phonetic) : null, speakBtn(w)) : null,
       quiz.checked ? rootsBox(w) : null,
-      el("div", { class: "tools" }, prevBtn(), favBtn(w)),
+      quiz.checked ? [noteEditor(w), noteBox(w)] : null,
+      el("div", { class: "tools" }, prevBtn(), favBtn(w), quiz.checked ? noteBtn(w) : null),
       el("p",{ class: "muted" }, quiz.checked ? "Press Enter for the next word. 按回车到下一个。" : "Press Enter to check. 按回车检查。")));
-    setTimeout(function () { var i = document.getElementById("answer"); if (i) i.focus(); }, 0);
+    setTimeout(function () { var i = document.getElementById("answer"); if (i && !noteOpen) i.focus(); }, 0);
   }
 
   function renderResult() {
@@ -542,7 +723,7 @@
         el("button", { class: "btn", type: "button", onclick: function () { var c = quiz.custom; startQuiz(quiz.words.slice()); quiz.custom = c; render(); } }, "Start again 全部重来"),
         el("button", { class: "btn", type: "button", onclick: function () { statsPeriod = "day"; setMode("stats"); } }, "📊 Today's summary 今日总结")),
       wrong.length ? [el("p", null, "Practise these again 这些词再练一次:"),
-        el("ul", { class: "list" }, wrong.map(function (w) { return el("li", null, el("b", null, w.en), " — " + w.zh, favBtn(w, true), rootsBox(w)); }))] : null,
+        el("ul", { class: "list" }, wrong.map(function (w) { return el("li", null, el("b", null, w.en), " — " + w.zh, favBtn(w, true), rootsBox(w), noteBox(w)); }))] : null,
       el("p", { class: "muted" }, "Your progress is saved. Words come back in Today's review: 1, 2, 4, 7, 15, 30 days later. " +
         "进度已保存，单词会在 1、2、4、7、15、30 天后回到「今日复习」。")));
   }
@@ -582,27 +763,33 @@
         if (!data || typeof data !== "object" || Array.isArray(data)) throw new Error("bad file");
         if (!confirm("Replace progress on this device with the file? 用这个文件替换本设备的进度？")) return;
         if (data.srs) { srs = data.srs || {}; fav = data.fav || {}; log = data.log || {}; } else { srs = data; } // old files = srs only
-        store.set("srs", srs); store.set("fav", fav); store.set("log", log); quiz = null; refreshHeader(); render();
+        if (data.notes) { notes = data.notes; store.set("notes", notes); }
+        store.set("srs", srs); store.set("fav", fav); store.set("log", log); quiz = null; refreshHeader(); renderFooter(); render();
       }).catch(function () { alert("This is not a progress file. 不是进度文件。"); });
     } });
+    add(footer, renderSyncBox());
     add(footer, el("details", { class: "progress-box" },
       el("summary", null, "⚙ Progress 学习进度"),
       el("p", null, "Progress is saved in this browser only (phone and computer are separate). Use Export / Import to move it. " +
         "进度只保存在这个浏览器里（手机和电脑分开）。可以导出 / 导入来转移。"),
       el("div", { class: "tools" },
         el("button", { class: "btn", type: "button", onclick: function () {
-          var a = el("a", { href: URL.createObjectURL(new Blob([JSON.stringify({ version: 2, srs: srs, fav: fav, log: log })], { type: "application/json" })),
+          var a = el("a", { href: URL.createObjectURL(new Blob([JSON.stringify({ version: 3, srs: srs, fav: fav, log: log, notes: notes })], { type: "application/json" })),
             download: "daily-words-progress-" + today() + ".json" });
           document.body.append(a); a.click(); a.remove();
         } }, "⬇ Export 导出"),
         el("button", { class: "btn", type: "button", onclick: function () { fileInput.click(); } }, "⬆ Import 导入"),
         el("button", { class: "btn", type: "button", onclick: function () {
-          if (!confirm("Delete all progress, favourites and history on this device? 删除本设备的全部进度、收藏和记录？")) return;
+          if (!confirm("Delete all progress, favourites and history on this device? (Notes are kept.) 删除本设备的全部进度、收藏和记录？（笔记会保留）")) return;
           srs = {}; fav = {}; log = {}; store.set("srs", srs); store.set("fav", fav); store.set("log", log); quiz = null; refreshHeader(); render();
         } }, "Reset 清空"), fileInput)));
   }
 
   function render() {
+    renderView();
+    if (noteOpen) setTimeout(function () { var t = document.querySelector(".note-edit textarea"); if (t && document.activeElement.tagName !== "TEXTAREA") t.focus(); }, 0);
+  }
+  function renderView() {
     app.textContent = "";
     document.querySelectorAll(".tabs button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.mode === mode)); });
     document.getElementById("mode-help").textContent = MODE_HELP[mode] || "";
@@ -619,7 +806,7 @@
   }
 
   function setMode(m, list) {
-    mode = m; store.set("mode", m); quiz = null; clearSearch();
+    noteOpen = null; mode = m; store.set("mode", m); quiz = null; clearSearch();
     if (list && m !== "print") startQuiz(list); else render();
   }
 
@@ -861,6 +1048,7 @@
     days.forEach(function (d) { d.words.forEach(function (w) { var k = key(w); if (!seen[k]) { seen[k] = 1; allWords.push(w); } }); });
     days.slice().reverse().forEach(function (d) { d.words.forEach(function (w) { if (!wordSet[key(w)]) wordSet[key(w)] = d; }); });
     allWords.forEach(function (w) { byKeyAll[key(w)] = w; });
+    remoteNotes = data.notes || {};
     // Newest set if it has unlearned words, else today's review if anything is due, else newest set.
     var newest = days[0];
     var newestHasNew = newest && newest.words.some(function (w) { return !srs[key(w)]; });
@@ -873,6 +1061,7 @@
     });
     renderFooter();
     render();
+    syncNotes(); // upload notes saved offline, and fetch notes written on other devices
   }
 
   fetch("data.json", { cache: "no-cache" })

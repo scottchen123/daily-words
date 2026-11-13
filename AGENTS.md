@@ -21,6 +21,9 @@ That is the whole job. GitHub Actions validates the file and publishes the websi
 5. Write `sentence` and `sentence_zh` yourself (see "Sentence rules").
 6. Write `roots`, `hook`, `family` yourself when the word has a real, well-known etymology (see "Word-root rules").
    **Never invent etymology.** If you are not sure, leave those fields out.
+7. **Never edit `notes/`.** `notes/notes.json` holds the learner's own notes (my sentence / note / 一句话串记),
+   written by the website's "☁ Sync to GitHub" with commits named "Update my notes (N)". If a push is rejected
+   because of such a commit, just `git pull --rebase` and push again — your word file and the notes never conflict.
 
 ## File format (fixed — keep exactly this shape)
 ```json
@@ -106,5 +109,6 @@ If you can run Node, validate first: `node scripts/build.mjs` (prints `OK: …` 
 Listen (听写), Cards (认词), Print (A4 默写纸), Summary (日/周/月总结 with most-missed words and spelling-error types) —
 plus a spaced-review list ("Today's review", words return after 1, 2, 4, 7, 15, 30 days) and Favourites (收藏).
 Progress, favourites and practice history are keyed by `en` (lowercased) and stored in the learner's browser,
-so **never rename or delete existing words**. Repeating a word in a later file is allowed (it shares progress), but
+so **never rename or delete existing words**. The learner's synced notes (`notes/notes.json`, also keyed by
+lowercased `en`) are merged into `data.json` as `notes` and shown under each word. Repeating a word in a later file is allowed (it shares progress), but
 avoid it unless the user wants it.

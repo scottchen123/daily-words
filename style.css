@@ -207,3 +207,14 @@ div.step { margin: 2px 0 6px; }
 
 .rate .btn.chosen { outline: 3px solid var(--accent); outline-offset: -3px; font-weight: 700; }
 .rate .btn:not(.chosen)[aria-pressed=false] { opacity: .75; }
+
+/* ---------- 📝 my notes ---------- */
+.note, .note-edit { border: 1px solid var(--accent); border-radius: 10px; padding: 10px 14px; margin: 10px 0; font-size: 15px; background: var(--bg); }
+.note > div { margin: 3px 0; }
+.note-h { font-weight: 600; color: var(--accent); display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.note-h small { font-weight: 400; color: var(--muted); }
+.note .k { color: var(--muted); }
+.note-edit textarea { display: block; width: 100%; box-sizing: border-box; margin: 6px 0; padding: 8px 10px; font: inherit; font-size: 16px;
+  border: 1px solid var(--line); border-radius: 8px; background: var(--paper); color: inherit; resize: vertical; }
+.note-edit textarea:focus { outline: none; border-color: var(--accent); }
+input.token { flex: 1; min-width: 0; font-size: 15px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: inherit; }

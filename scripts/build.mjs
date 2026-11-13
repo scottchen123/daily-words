@@ -56,6 +56,22 @@ for (const f of files) {
 }
 if (!days.length && !errors.length) errors.push("words/: no word files found");
 
+// notes/notes.json = the user's own notes, written by the website's "Sync to GitHub" (not by AIs).
+// A broken notes file only gives a warning, so it can never stop new words from going live.
+let notes = {};
+const notesFile = path.join(root, "notes", "notes.json");
+if (fs.existsSync(notesFile)) {
+  try {
+    const n = JSON.parse(fs.readFileSync(notesFile, "utf8").replace(/^﻿/, "")).notes || {};
+    for (const [k, v] of Object.entries(n)) {
+      if (!v || typeof v !== "object") continue;
+      const clean = {};
+      for (const f of ["s", "n", "c", "t"]) if (typeof v[f] === "string" && v[f].trim()) clean[f] = v[f].trim();
+      if (clean.s || clean.n || clean.c) notes[k.trim().toLowerCase()] = clean;
+    }
+  } catch (e) { warnings.push(`notes/notes.json: invalid JSON, notes skipped – ${e.message}`); }
+}
+
 for (const w of warnings) console.log("WARNING " + w);
 if (errors.length) {
   for (const e of errors) console.error("ERROR   " + e);
@@ -73,7 +89,7 @@ for (const f of ["style.css", "app.js"]) {
   html = html.replace(new RegExp('(href|src)="' + f.replace(".", "\.") + '"'), '$1="' + f + "?v=" + v + '"');
 }
 fs.writeFileSync(path.join(outDir, "index.html"), html);
-fs.writeFileSync(path.join(outDir, "data.json"), JSON.stringify({ built: new Date().toISOString(), days }));
+fs.writeFileSync(path.join(outDir, "data.json"), JSON.stringify({ built: new Date().toISOString(), days, notes }));
 fs.writeFileSync(path.join(outDir, ".nojekyll"), "");
 const total = days.reduce((n, d) => n + d.words.length, 0);
-console.log(`OK: ${days.length} set(s), ${total} words, ${warnings.length} warning(s) -> _site/`);
+console.log(`OK: ${days.length} set(s), ${total} words, ${Object.keys(notes).length} note(s), ${warnings.length} warning(s) -> _site/`);
