@@ -119,7 +119,6 @@
   // ---------- state ----------
   var days = [], allWords = [];
   var app = document.getElementById("app");
-  var setSel = document.getElementById("set");
   var statsEl = document.getElementById("stats");
   var footer = document.getElementById("footer");
   var mode = store.get("mode", "write");
@@ -130,7 +129,7 @@
     print: "🖨 打印：打印成 A4 纸，用笔默写，答案折到背面。",
     stats: "📊 总结：看今天 / 本周 / 本月练得怎么样，哪些词常错、错在哪里，以及下一步建议。"
   };
-  var opts = { shuffle: store.get("shuffle", true), withSentence: store.get("withSentence", false) };
+  var opts = { shuffle: store.get("shuffle", true), withSentence: store.get("withSentence", false), limit: store.get("limit", 0) };
   var selected = null; // "review" | "fav" | "all" | day id
   var quiz = null;
   var searchEl = document.getElementById("search");
@@ -266,31 +265,69 @@
     var mastered = allWords.filter(function (w) { var s = srs[key(w)]; return s && s.box >= 5; }).length;
     statsEl.textContent = "Learned 已学 " + learned + " / " + allWords.length +
       "  ·  Due today 今日待复习 " + due + "  ·  Mastered 已掌握 " + mastered;
-    setSel.textContent = "";
-    setSel.append(el("option", { value: "review" }, "📅 Today's review 今日复习 (" + due + ")"));
-    setSel.append(el("option", { value: "fav" }, "⭐ Favourites 我的收藏 (" + allWords.filter(isFav).length + ")"));
-    setSel.append(el("option", { value: "mistakes" }, "❌ 错词本 My mistakes (" + mistakeWords().length + ")"));
-    days.forEach(function (d) {
-      setSel.append(el("option", { value: d.id }, d.date + (d.title ? " · " + d.title : "") + " (" + d.words.length + ")"));
-    });
-    setSel.append(el("option", { value: "all" }, "All words 全部单词 (" + allWords.length + ")"));
-    setSel.value = selected;
+  }
+
+  // ---------- start page: ① how (tabs) → ② which words → ③ how many → Start ----------
+  var MODE_NAME = { write: "✍️ 默写", listen: "🎧 听写", cards: "🃏 认词", print: "🖨 打印" };
+  var MODE_VERB = { write: "默写", listen: "听写", cards: "认词" };
+  function scopeList() {
+    var list = [
+      { v: "review", label: "📅 今日复习", sub: "Today's review", n: allWords.filter(isDue).length },
+      { v: "mistakes", label: "❌ 错词本", sub: "My mistakes", n: mistakeWords().length },
+      { v: "fav", label: "⭐ 我的收藏", sub: "Favourites", n: allWords.filter(isFav).length }
+    ];
+    days.forEach(function (d) { list.push({ v: d.id, label: "📚 " + (d.title || d.date), sub: d.date, n: d.words.length }); });
+    list.push({ v: "all", label: "🗂 全部单词", sub: "All words", n: allWords.length });
+    return list;
+  }
+  function scopeName(v) { var s = scopeList().find(function (x) { return x.v === v; }); return s ? s.label : ""; }
+  function pickScope(v) { selected = v; store.set("selected", v); quiz = null; render(); }
+  function renderSetup() {
+    var total = wordsOf(selected).length;
+    var n = mode === "print" || !opts.limit ? total : Math.min(total, opts.limit);
+    add(app, el("section", { class: "card setup noprint" },
+      el("h3", { class: "setup-h" }, "② 选单词范围 Which words"),
+      el("div", { class: "scopes" }, scopeList().map(function (s) {
+        return el("button", { class: "scope" + (s.n ? "" : " zero"), type: "button", "aria-pressed": String(s.v === selected),
+          onclick: function () { pickScope(s.v); } },
+          el("span", { class: "s-l" }, s.label), el("small", null, el("b", { class: "s-n" }, s.n + " 个"), " · " + s.sub));
+      }))));
+    if (selected === "mistakes") add(app, renderMistakeFilters());
+    if (mode === "print") return;
+    add(app, el("section", { class: "card setup noprint" },
+      el("h3", { class: "setup-h" }, "③ 这次练几个 How many"),
+      el("div", { class: "tools seg4" }, [0, 10, 20, 30].map(function (k) {
+        return el("button", { class: "btn", type: "button", "aria-pressed": String((opts.limit || 0) === k),
+          onclick: function () { opts.limit = k; store.set("limit", k); render(); } }, k ? k + " 个" : "全部 All");
+      })),
+      el("label", { class: "check" }, el("input", { type: "checkbox", checked: opts.shuffle, onchange: function (e) {
+        opts.shuffle = e.target.checked; store.set("shuffle", opts.shuffle); } }), "打乱顺序 Shuffle"),
+      total ? el("button", { class: "btn primary big start", type: "button", id: "start", onclick: function () { startQuiz(); } },
+          "▶ 开始" + (MODE_VERB[mode] || "") + " Start（" + n + " 个词）")
+        : el("p", { class: "muted" }, selected === "review" ? "🎉 今天没有要复习的词，选别的范围吧。Nothing due today."
+          : selected === "fav" ? "还没有收藏。练习时点「☆ 收藏」，单词就会出现在这里。"
+          : selected === "mistakes" ? "没有符合条件的错词，换个时间或类型试试。" : "这里还没有单词。")));
   }
 
   // ---------- quiz flow ----------
   function startQuiz(list) {
     var words = list || wordsOf(selected);
+    var custom = list ? "自选 Custom" : null;
+    if (!list) { if (opts.shuffle) words = shuffle(words); if (opts.limit) words = words.slice(0, opts.limit); }
     // pos = the word being worked on; back = how many finished words we are looking back at;
     // done[i] = result of finished word i ({answer, ok} or {rating}).
-    quiz = { words: opts.shuffle ? shuffle(words) : words, pos: 0, right: 0, wrong: [], done: [], back: 0,
-             revealed: false, checked: false, ok: false, hint: false, sentence: false, answer: "" };
+    quiz = { words: list && opts.shuffle ? shuffle(words) : words, pos: 0, right: 0, wrong: [], done: [], back: 0,
+             revealed: false, checked: false, ok: false, hint: false, sentence: false, answer: "", custom: custom };
     render();
     autoSpeak();
   }
   function current() { return quiz.words[quiz.pos]; }
   function autoSpeak() {
     if (!quiz || quiz.pos >= quiz.words.length) return;
-    if (mode === "cards" || mode === "listen") setTimeout(function () { speak(current().en); }, 250);
+    var q = quiz, pos = quiz.pos;
+    if (mode === "cards" || mode === "listen") setTimeout(function () {
+      if (quiz === q && quiz.pos === pos && quiz.back === 0) speak(current().en); // still on the same word
+    }, 250);
   }
   function next() {
     quiz.pos++;
@@ -471,24 +508,12 @@
         wrong.length ? el("button", { class: "btn primary", type: "button", onclick: function () { startQuiz(wrong.slice()); } }, "↻ Only these 只练这些") : null,
         wasCards ? el("button", { class: wrong.length ? "btn" : "btn primary", type: "button",
           onclick: function () { setMode("write", quiz.words.slice()); } }, "✍ Now write them 现在默写") : null,
-        el("button", { class: "btn", type: "button", onclick: function () { startQuiz(); } }, "Start again 全部重来"),
+        el("button", { class: "btn", type: "button", onclick: function () { var c = quiz.custom; startQuiz(quiz.words.slice()); quiz.custom = c; render(); } }, "Start again 全部重来"),
         el("button", { class: "btn", type: "button", onclick: function () { statsPeriod = "day"; setMode("stats"); } }, "📊 Today's summary 今日总结")),
       wrong.length ? [el("p", null, "Practise these again 这些词再练一次:"),
         el("ul", { class: "list" }, wrong.map(function (w) { return el("li", null, el("b", null, w.en), " — " + w.zh, favBtn(w, true), rootsBox(w)); }))] : null,
       el("p", { class: "muted" }, "Your progress is saved. Words come back in Today's review: 1, 2, 4, 7, 15, 30 days later. " +
         "进度已保存，单词会在 1、2、4、7、15、30 天后回到「今日复习」。")));
-  }
-
-  function renderEmpty() {
-    var isReview = selected === "review", isFavSel = selected === "fav";
-    add(app, el("section", { class: "card empty" },
-      el("div", { class: "big" }, isReview || selected === "mistakes" ? "🎉" : isFavSel ? "⭐" : "📭"),
-      el("p", null, isReview ? "Nothing to review right now. 现在没有要复习的词。"
-        : selected === "mistakes" ? "No mistakes match these filters. Try another time range or type. 没有符合条件的错词，换个时间或类型试试。"
-        : isFavSel ? "No favourites yet. While practising, tap ☆ Save 收藏 and the word appears here. 还没有收藏。练习时点「☆ 收藏」，单词就会出现在这里。"
-        : "No words here yet. 这里还没有单词。"),
-      isReview && days.length ? el("button", { class: "btn primary", type: "button",
-        onclick: function () { selected = days[0].id; quiz = null; refreshHeader(); render(); } }, "Learn the newest set 学最新一组") : null));
   }
 
   function renderPrint() {
@@ -550,16 +575,13 @@
     app.textContent = "";
     document.querySelectorAll(".tabs button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.mode === mode)); });
     document.getElementById("mode-help").textContent = MODE_HELP[mode] || "";
-    if (searchQ.trim()) { setSel.parentElement.style.display = ""; return renderSearch(); }
-    setSel.parentElement.style.display = mode === "stats" ? "none" : "";
+    if (searchQ.trim()) return renderSearch();
     if (mode === "stats") return renderStats();
-    if (selected === "mistakes") add(app, renderMistakeFilters());
-    if (mode === "print") return wordsOf(selected).length ? renderPrint() : renderEmpty();
-    if (!quiz) { startQuiz(); return; }
-    if (!quiz.words.length) return renderEmpty();
-    add(app, el("div", { class: "options noprint" },
-      el("label", { class: "check" }, el("input", { type: "checkbox", checked: opts.shuffle, onchange: function (e) {
-        opts.shuffle = e.target.checked; store.set("shuffle", opts.shuffle); startQuiz(); } }), "Shuffle 打乱顺序")));
+    if (mode === "print") { renderSetup(); return wordsOf(selected).length ? renderPrint() : null; }
+    if (!quiz || !quiz.words.length) { quiz = null; return renderSetup(); }
+    add(app, el("div", { class: "run-bar noprint" },
+      el("span", null, (MODE_NAME[mode] || "") + " · " + (quiz.custom || scopeName(selected)) + " · " + quiz.words.length + " 个词"),
+      el("button", { class: "btn", type: "button", onclick: function () { quiz = null; render(); } }, "↺ 换范围 Change")));
     if (quiz.back > 0) return renderPast();
     if (quiz.pos >= quiz.words.length) return renderResult();
     if (mode === "cards") renderCards(); else renderWrite();
@@ -813,7 +835,6 @@
     var newestHasNew = newest && newest.words.some(function (w) { return !srs[key(w)]; });
     selected = newestHasNew ? newest.id : (allWords.some(isDue) ? "review" : (newest ? newest.id : "all"));
     refreshHeader();
-    setSel.addEventListener("change", function () { selected = setSel.value; quiz = null; clearSearch(); render(); });
     searchEl.addEventListener("input", function () { searchQ = searchEl.value; render(); });
     searchEl.addEventListener("keydown", function (e) { if (e.key === "Escape") { clearSearch(); render(); } });
     document.querySelectorAll(".tabs button").forEach(function (b) {
