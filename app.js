@@ -136,6 +136,64 @@
   var searchEl = document.getElementById("search");
   var searchQ = "";
   var wordSet = {}; // word key -> the set (day) it first appeared in
+  var byKeyAll = {}; // word key -> word
+
+  // ---------- ❌ mistakes list (filters) ----------
+  var mf = Object.assign({ range: "7", set: "any", type: "any", min: 1, open: false }, store.get("mistakeFilter", {}));
+  var MF_RANGES = { today: "今天 Today", "7": "最近 7 天 Last 7 days", "30": "最近 30 天 Last 30 days", all: "全部时间 All time" };
+  function mfRange() {
+    var t = today();
+    if (mf.range === "today") return [t, t];
+    if (mf.range === "7") return [addDays(t, -6), t];
+    if (mf.range === "30") return [addDays(t, -29), t];
+    var first = Object.keys(log).sort()[0] || t;
+    return [first < t ? first : t, t];
+  }
+  // types of mistakes a word had in the period: spelling patterns + "forgot" (cards 不认识 / couldn't recall)
+  function mistakeTypes(w, e) {
+    var types = {};
+    (e.a || []).forEach(function (ans) { types[classify(ans, w.en)] = 1; });
+    if (e.f) types.forgot = 1;
+    return types;
+  }
+  function mistakeEntries(ignoreType) {
+    var A = aggregate(mfRange());
+    return Object.keys(A.words).map(function (k) {
+      var e = A.words[k], w = byKeyAll[k];
+      return w && { w: w, e: e, miss: e.x + e.f, types: mistakeTypes(w, e) };
+    }).filter(function (m) {
+      if (!m || m.miss < mf.min) return false;
+      if (mf.set !== "any" && (!wordSet[key(m.w)] || wordSet[key(m.w)].id !== mf.set)) return false;
+      if (mf.open && !(srs[key(m.w)] && srs[key(m.w)].box === 0)) return false;
+      if (!ignoreType && mf.type !== "any" && !m.types[mf.type]) return false;
+      return true;
+    }).sort(function (a, b) { return b.miss - a.miss; });
+  }
+  function mistakeWords() { return mistakeEntries().map(function (m) { return m.w; }); }
+  function setMf(k, v) { mf[k] = v; store.set("mistakeFilter", mf); quiz = null; refreshHeader(); render(); }
+  function renderMistakeFilters() {
+    var all = mistakeEntries(true), typeCount = {};
+    all.forEach(function (m) { Object.keys(m.types).forEach(function (t) { typeCount[t] = (typeCount[t] || 0) + 1; }); });
+    function sel(label, k, options, toVal) {
+      var s = el("select", { onchange: function (e) { setMf(k, toVal ? toVal(e.target.value) : e.target.value); } },
+        options.map(function (o) { return el("option", { value: o[0] }, o[1]); }));
+      s.value = String(mf[k]);
+      return el("label", { class: "mf" }, el("span", null, label), s);
+    }
+    var n = mistakeWords().length;
+    return el("section", { class: "card mf-card noprint" },
+      el("div", { class: "mf-head" }, el("b", null, "❌ 错词本 My mistakes"), el("span", { class: "muted" }, "符合条件 " + n + " 个词")),
+      el("div", { class: "mf-grid" },
+        sel("📅 时间 When", "range", Object.keys(MF_RANGES).map(function (k) { return [k, MF_RANGES[k]]; })),
+        sel("📚 哪一组 Set", "set", [["any", "全部组 All sets"]].concat(days.map(function (d) { return [d.id, d.date + (d.title ? " · " + d.title : "")]; }))),
+        sel("🔍 错误类型 Type", "type", [["any", "全部类型 All types (" + all.length + ")"]].concat(
+          Object.keys(PATTERNS).filter(function (t) { return typeCount[t]; })
+            .map(function (t) { return [t, PATTERNS[t][0] + " " + PATTERNS[t][1] + " (" + typeCount[t] + ")"]; }))),
+        sel("🔁 错了几次 Times wrong", "min", [["1", "1 次以上 1+"], ["2", "2 次以上 2+"], ["3", "3 次以上 3+"]], Number)),
+      el("label", { class: "check" }, el("input", { type: "checkbox", checked: mf.open, onchange: function (e) { setMf("open", e.target.checked); } }),
+        "只练还没改对的（最近一次还是错的）Only words I still get wrong"),
+      mf.type !== "any" && PATTERNS[mf.type] ? el("p", { class: "muted" }, "💡 " + PATTERNS[mf.type][2]) : null);
+  }
 
   // ---------- search ----------
   function clearSearch() { searchQ = ""; searchEl.value = ""; }
@@ -196,6 +254,7 @@
   function wordsOf(sel) {
     if (sel === "review") return allWords.filter(isDue);
     if (sel === "fav") return allWords.filter(isFav);
+    if (sel === "mistakes") return mistakeWords();
     if (sel === "all") return allWords.slice();
     var d = days.find(function (x) { return x.id === sel; });
     return d ? d.words.slice() : [];
@@ -210,6 +269,7 @@
     setSel.textContent = "";
     setSel.append(el("option", { value: "review" }, "📅 Today's review 今日复习 (" + due + ")"));
     setSel.append(el("option", { value: "fav" }, "⭐ Favourites 我的收藏 (" + allWords.filter(isFav).length + ")"));
+    setSel.append(el("option", { value: "mistakes" }, "❌ 错词本 My mistakes (" + mistakeWords().length + ")"));
     days.forEach(function (d) {
       setSel.append(el("option", { value: d.id }, d.date + (d.title ? " · " + d.title : "") + " (" + d.words.length + ")"));
     });
@@ -420,8 +480,9 @@
   function renderEmpty() {
     var isReview = selected === "review", isFavSel = selected === "fav";
     add(app, el("section", { class: "card empty" },
-      el("div", { class: "big" }, isReview ? "🎉" : isFavSel ? "⭐" : "📭"),
+      el("div", { class: "big" }, isReview || selected === "mistakes" ? "🎉" : isFavSel ? "⭐" : "📭"),
       el("p", null, isReview ? "Nothing to review right now. 现在没有要复习的词。"
+        : selected === "mistakes" ? "No mistakes match these filters. Try another time range or type. 没有符合条件的错词，换个时间或类型试试。"
         : isFavSel ? "No favourites yet. While practising, tap ☆ Save 收藏 and the word appears here. 还没有收藏。练习时点「☆ 收藏」，单词就会出现在这里。"
         : "No words here yet. 这里还没有单词。"),
       isReview && days.length ? el("button", { class: "btn primary", type: "button",
@@ -432,7 +493,7 @@
     var words = wordsOf(selected);
     var withS = opts.withSentence;
     var d = days.find(function (x) { return x.id === selected; });
-    var title = selected === "review" ? "Today's review 今日复习" : selected === "fav" ? "Favourites 我的收藏" : selected === "all" ? "All words 全部单词" : (d.title || "Dictation");
+    var title = selected === "review" ? "Today's review 今日复习" : selected === "fav" ? "Favourites 我的收藏" : selected === "mistakes" ? "My mistakes 错词本" : selected === "all" ? "All words 全部单词" : (d.title || "Dictation");
     add(app, el("section", { class: "card" },
       el("div", { class: "noprint tools" },
         el("button", { class: "btn primary", type: "button", onclick: function () { window.print(); } }, "🖨 Print 打印"),
@@ -490,6 +551,7 @@
     if (searchQ.trim()) { setSel.style.display = ""; return renderSearch(); }
     setSel.style.display = mode === "stats" ? "none" : "";
     if (mode === "stats") return renderStats();
+    if (selected === "mistakes") add(app, renderMistakeFilters());
     if (mode === "print") return wordsOf(selected).length ? renderPrint() : renderEmpty();
     if (!quiz) { startQuiz(); return; }
     if (!quiz.words.length) return renderEmpty();
@@ -743,6 +805,7 @@
     var seen = {};
     days.forEach(function (d) { d.words.forEach(function (w) { var k = key(w); if (!seen[k]) { seen[k] = 1; allWords.push(w); } }); });
     days.slice().reverse().forEach(function (d) { d.words.forEach(function (w) { if (!wordSet[key(w)]) wordSet[key(w)] = d; }); });
+    allWords.forEach(function (w) { byKeyAll[key(w)] = w; });
     // Newest set if it has unlearned words, else today's review if anything is due, else newest set.
     var newest = days[0];
     var newestHasNew = newest && newest.words.some(function (w) { return !srs[key(w)]; });
