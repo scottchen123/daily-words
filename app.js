@@ -126,7 +126,7 @@
   var MODE_HELP = {
     write: "✍️ 默写：看中文，打出英文单词，按回车检查。不会可以点「提示」或「例句」。",
     listen: "🎧 听写：听发音，打出英文单词。可以点「播放」再听一次。",
-    cards: "🃏 认词：第一次学新词时用。先看英文想意思，再看答案。",
+    cards: "🃏 认词（翻卡片）：① 看英文，自己想中文意思 → ② 点「看意思」对答案 → ③ 选「不认识 / 模糊 / 认识」，自动到下一个词。",
     print: "🖨 打印：打印成 A4 纸，用笔默写，答案折到背面。",
     stats: "📊 总结：看今天 / 本周 / 本月练得怎么样，哪些词常错、错在哪里，以及下一步建议。"
   };
@@ -362,7 +362,7 @@
   function progressBar() {
     var total = quiz.words.length;
     return [
-      el("div", { class: "progress" }, el("span", null, (quiz.pos + 1) + " / " + total),
+      el("div", { class: "progress" }, el("span", null, "第 " + (quiz.pos + 1) + " 个 / 共 " + total + " 个"),
         el("span", null, "✓ " + quiz.right + "   ✗ " + quiz.wrong.length)),
       el("div", { class: "meter" }, el("i", { style: "width:" + (quiz.pos / total * 100) + "%" }))
     ];
@@ -401,13 +401,15 @@
         el("div", { class: "tools" }, el("button", { class: "btn primary big", type: "button", id: "reveal",
           onclick: function () { quiz.revealed = true; render(); } }, "Show meaning 看意思", el("small", null, "Space"))));
     } else {
+      // Rating buttons come right after the meaning so they are on screen; choosing one goes to the next word.
       body.push(el("div", { class: "meaning" }, w.pos ? el("span", { class: "pos" }, w.pos) : null, w.zh),
-        sentenceBox(w, true),
-        rootsBox(w),
+        el("p", { class: "rate-q" }, "刚才你想对了吗？选一个，就会到下一个词 →"),
         el("div", { class: "rate" },
-          el("button", { class: "btn bad", type: "button", onclick: function () { rate("bad"); } }, "😕 Forgot 不认识", el("kbd", null, "1")),
-          el("button", { class: "btn mid", type: "button", onclick: function () { rate("unsure"); } }, "🤔 Not sure 模糊", el("kbd", null, "2")),
-          el("button", { class: "btn good", type: "button", onclick: function () { rate("good"); } }, "😀 Knew it 认识", el("kbd", null, "3"))));
+          el("button", { class: "btn bad", type: "button", onclick: function () { rate("bad"); } }, "😕 不认识", el("kbd", null, "Forgot → 下一个")),
+          el("button", { class: "btn mid", type: "button", onclick: function () { rate("unsure"); } }, "🤔 模糊", el("kbd", null, "Not sure → 下一个")),
+          el("button", { class: "btn good", type: "button", onclick: function () { rate("good"); } }, "😀 认识", el("kbd", null, "Knew it → 下一个"))),
+        sentenceBox(w, true),
+        rootsBox(w));
     }
     body.push(el("div", { class: "tools" }, prevBtn(), favBtn(w)));
     add(app, el("section", { class: "card" }, body));
@@ -548,8 +550,8 @@
     app.textContent = "";
     document.querySelectorAll(".tabs button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.mode === mode)); });
     document.getElementById("mode-help").textContent = MODE_HELP[mode] || "";
-    if (searchQ.trim()) { setSel.style.display = ""; return renderSearch(); }
-    setSel.style.display = mode === "stats" ? "none" : "";
+    if (searchQ.trim()) { setSel.parentElement.style.display = ""; return renderSearch(); }
+    setSel.parentElement.style.display = mode === "stats" ? "none" : "";
     if (mode === "stats") return renderStats();
     if (selected === "mistakes") add(app, renderMistakeFilters());
     if (mode === "print") return wordsOf(selected).length ? renderPrint() : renderEmpty();

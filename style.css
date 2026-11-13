@@ -177,3 +177,12 @@ ul.missed li { padding: 8px 0; border-bottom: 1px solid var(--line); }
 label.mf { display: flex; flex-direction: column; gap: 3px; font-size: 13px; color: var(--muted); }
 label.mf select { width: 100%; font-size: 15px; color: var(--ink); }
 @media (max-width: 520px) { .mf-grid { gap: 6px 8px; } label.mf select { font-size: 13px; padding: 6px 4px; } .mf-card { padding: 14px; } }
+
+/* ---------- step labels + cards rating ---------- */
+.step { font-size: 13px; font-weight: 600; color: var(--muted); }
+div.step { margin: 2px 0 6px; }
+.bar .step { flex-basis: 100%; margin-bottom: -4px; }
+.rate-q { margin: 14px 0 0; font-size: 14px; color: var(--muted); }
+.rate { margin-top: 8px; }
+.rate .btn { font-size: 16px; }
+.rate kbd { font-size: 11px; margin-top: 2px; }
