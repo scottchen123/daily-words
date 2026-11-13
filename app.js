@@ -234,7 +234,7 @@
   }
   function next() {
     quiz.pos++;
-    quiz.revealed = quiz.checked = quiz.hint = quiz.sentence = false;
+    quiz.revealed = quiz.checked = quiz.hint = quiz.sentence = quiz.roots = false;
     quiz.answer = "";
     render();
     autoSpeak();
@@ -380,10 +380,12 @@
       showPrompt ? el("div", { class: "prompt" }, w.zh, w.pos ? el("span", { class: "pos" }, w.pos) : null) : null,
       quiz.checked ? null : el("div", { class: "tools" },
         el("button", { class: "btn", type: "button", "aria-pressed": String(quiz.hint), onclick: toggle("hint") }, "💡 Hint 提示"),
-        parts ? el("button", { class: "btn", type: "button", "aria-pressed": String(quiz.sentence), onclick: toggle("sentence") }, "📝 Sentence 例句") : null),
+        parts ? el("button", { class: "btn", type: "button", "aria-pressed": String(quiz.sentence), onclick: toggle("sentence") }, "📝 Sentence 例句") : null,
+        w.roots || w.hook ? el("button", { class: "btn", type: "button", "aria-pressed": String(!!quiz.roots), onclick: toggle("roots") }, "🧩 Roots 词根") : null),
       quiz.hint && !quiz.checked ? el("div", { class: "hint" }, hintText(w),
         el("div", { class: "muted" }, w.en.replace(/ /g, "").length + " letters 个字母")) : null,
       (quiz.sentence && parts) || quiz.checked ? sentenceBox(w, quiz.checked) : null,
+      quiz.roots && !quiz.checked ? rootsBox(w) : null,
       form,
       quiz.checked ? el("div", { class: "feedback " + (quiz.ok ? "ok" : "no") },
         quiz.ok ? "✓ Correct! 正确！ " : "✗ Answer 答案: ",
@@ -401,9 +403,7 @@
     add(app, el("section", { class: "card" },
       el("div", { class: "muted" }, "Finished! 完成了！"),
       el("div", { class: "score" }, quiz.right + " / " + total),
-      wrong.length === 0 ? el("p", null, "🎉 All correct! 全部正确！")
-        : [el("p", null, "Practise these again 这些词再练一次:"),
-           el("ul", { class: "list" }, wrong.map(function (w) { return el("li", null, el("b", null, w.en), " — " + w.zh, favBtn(w, true)); }))],
+      wrong.length === 0 ? el("p", null, "🎉 All correct! 全部正确！") : null,
       el("div", { class: "tools" },
         prevBtn(),
         wrong.length ? el("button", { class: "btn primary", type: "button", onclick: function () { startQuiz(wrong.slice()); } }, "↻ Only these 只练这些") : null,
@@ -411,6 +411,8 @@
           onclick: function () { setMode("write", quiz.words.slice()); } }, "✍ Now write them 现在默写") : null,
         el("button", { class: "btn", type: "button", onclick: function () { startQuiz(); } }, "Start again 全部重来"),
         el("button", { class: "btn", type: "button", onclick: function () { statsPeriod = "day"; setMode("stats"); } }, "📊 Today's summary 今日总结")),
+      wrong.length ? [el("p", null, "Practise these again 这些词再练一次:"),
+        el("ul", { class: "list" }, wrong.map(function (w) { return el("li", null, el("b", null, w.en), " — " + w.zh, favBtn(w, true), rootsBox(w)); }))] : null,
       el("p", { class: "muted" }, "Your progress is saved. Words come back in Today's review: 1, 2, 4, 7, 15, 30 days later. " +
         "进度已保存，单词会在 1、2、4、7、15、30 天后回到「今日复习」。")));
   }
@@ -713,7 +715,8 @@
               el("span", { class: "muted" }, "错 " + m.miss + " / " + m.total),
               sp.length ? el("div", { class: "spell" }, "你写成 You wrote: ", sp.map(function (s) {
                 return el("span", { class: "tag" }, s, el("small", null, PATTERNS[m.spell[s]][0]));
-              })) : null);
+              })) : null,
+              rootsBox(m.w));
           })),
           el("div", { class: "tools" },
             el("button", { class: "btn primary", type: "button", onclick: function () {
