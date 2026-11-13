@@ -204,3 +204,6 @@ div.step { margin: 2px 0 6px; }
 .run-bar { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 14px; color: var(--muted); }
 .run-bar .btn { padding: 5px 10px; font-size: 14px; flex-shrink: 0; }
 @media (max-width: 520px) { .scopes { grid-template-columns: 1fr 1fr; } .scope { padding: 8px 10px; } }
+
+.rate .btn.chosen { outline: 3px solid var(--accent); outline-offset: -3px; font-weight: 700; }
+.rate .btn:not(.chosen)[aria-pressed=false] { opacity: .75; }

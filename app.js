@@ -337,9 +337,11 @@
     autoSpeak();
   }
   function rate(result) {
-    var w = current();
+    var w = current(), k = key(w);
+    // keep the progress from before this rating, so the rating can be changed later when looking back
+    var prev = srs[k] ? JSON.parse(JSON.stringify(srs[k])) : null;
     grade(w, result, { mode: "cards" });
-    quiz.done[quiz.pos] = { rating: result };
+    quiz.done[quiz.pos] = { rating: result, prev: prev, day: today() };
     if (result === "good") quiz.right++; else quiz.wrong.push(w);
     refreshHeader();
     next();
@@ -372,6 +374,30 @@
   }
   var RATING = { bad: "😕 Forgot 不认识", unsure: "🤔 Not sure 模糊", good: "😀 Knew it 认识" };
 
+  // undo one practice record (used when a Cards rating is changed)
+  function unlogEvent(k, result, day) {
+    var d = log[day]; if (!d) return;
+    var f = result === "good" ? "c" : result === "unsure" ? "u" : "f";
+    if (d.m.cards) d.m.cards--;
+    var e = d.w[k]; if (!e) return;
+    if (e[f]) e[f]--;
+    if (!e[f]) delete e[f];
+    if (!Object.keys(e).length) delete d.w[k];
+    store.set("log", log);
+  }
+  function changeRating(idx, result) {
+    var r = quiz.done[idx], w = quiz.words[idx], k = key(w);
+    if (!r || r.rating === result) return;
+    if (r.prev) srs[k] = r.prev; else delete srs[k];
+    unlogEvent(k, r.rating, r.day);
+    if (r.rating === "good") quiz.right--; else { var i = quiz.wrong.indexOf(w); if (i >= 0) quiz.wrong.splice(i, 1); }
+    grade(w, result, { mode: "cards" });
+    if (result === "good") quiz.right++; else quiz.wrong.push(w);
+    r.rating = result; r.day = today();
+    refreshHeader();
+    render();
+  }
+
   function renderPast() {
     var idx = quiz.pos - quiz.back;
     var w = quiz.words[idx], r = quiz.done[idx] || {};
@@ -385,7 +411,12 @@
       el("div", { class: "meaning" }, w.pos ? el("span", { class: "pos" }, w.pos) : null, w.zh),
       sentenceBox(w, true),
       rootsBox(w),
-      r.rating ? el("p", null, "You chose 你选了: " + RATING[r.rating])
+      r.rating ? [el("p", { class: "rate-q" }, "你选了（可以改）You chose — tap to change:"),
+        el("div", { class: "rate" }, ["bad", "unsure", "good"].map(function (k) {
+          return el("button", { class: "btn " + { bad: "bad", unsure: "mid", good: "good" }[k] + (r.rating === k ? " chosen" : ""), type: "button",
+            "aria-pressed": String(r.rating === k), onclick: function () { changeRating(idx, k); } },
+            RATING[k].split(" ")[0] + " " + RATING[k].split(" ").slice(-1)[0], r.rating === k ? el("kbd", null, "✓ 已选 Chosen") : null);
+        }))]
         : "answer" in r ? el("div", { class: "feedback " + (r.ok ? "ok" : "no") },
             (r.ok ? "✓ Correct 正确 — you wrote 你写的: " : "✗ You wrote 你写的: "), el("b", null, r.answer)) : null,
       el("div", { class: "tools" }, prevBtn(), favBtn(w),
