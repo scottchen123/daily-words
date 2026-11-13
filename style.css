@@ -160,3 +160,12 @@ ul.missed li { padding: 8px 0; border-bottom: 1px solid var(--line); }
 .roots-h { font-weight: 600; color: var(--accent); }
 .roots .k { color: var(--muted); }
 .roots .mn small { color: var(--muted); margin-left: 4px; }
+
+/* ---------- search ---------- */
+#search { display: block; width: 100%; margin: 12px 0 0; padding: 10px 14px; font-size: 16px; border: 1px solid var(--line);
+  border-radius: 12px; background: var(--paper); color: var(--ink); outline: none; }
+#search:focus { border-color: var(--accent); }
+.result { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.result:last-of-type { border-bottom: 0; }
+.result .rw { font: 700 24px var(--serif); }
+.result .sentence, .result .roots { margin: 8px 0 0; }

@@ -133,6 +133,65 @@
   var opts = { shuffle: store.get("shuffle", true), withSentence: store.get("withSentence", false) };
   var selected = null; // "review" | "fav" | "all" | day id
   var quiz = null;
+  var searchEl = document.getElementById("search");
+  var searchQ = "";
+  var wordSet = {}; // word key -> the set (day) it first appeared in
+
+  // ---------- search ----------
+  function clearSearch() { searchQ = ""; searchEl.value = ""; }
+  function findWords(q) {
+    q = norm(q);
+    if (!q) return { hits: [], close: [] };
+    var latin = /^[a-z' -]+$/.test(q);
+    var scored = [];
+    allWords.forEach(function (w) {
+      var en = norm(w.en), s = 0;
+      if (en === q) s = 100;
+      else if (en.indexOf(q) === 0) s = 80;
+      else if (en.indexOf(q) > 0) s = 60;
+      else if (w.zh.indexOf(q) >= 0) s = 70;
+      else if (q.length >= 4 && (w.family || []).some(function (f) { return norm(f).indexOf(q) >= 0; })) s = 30;
+      if (s) scored.push({ w: w, s: s });
+    });
+    scored.sort(function (a, b) { return b.s - a.s || a.w.en.length - b.w.en.length; });
+    var hits = scored.map(function (x) { return x.w; });
+    // Misspelled English: suggest close words ("did you mean")
+    var close = [];
+    if (latin && q.length >= 3) {
+      close = allWords.filter(function (w) { return hits.indexOf(w) < 0; })
+        .map(function (w) { return { w: w, d: lev(q, norm(w.en)) }; })
+        .filter(function (x) { return x.d <= Math.max(1, Math.round(x.w.en.length / 4)); })
+        .sort(function (a, b) { return a.d - b.d; }).slice(0, 5).map(function (x) { return x.w; });
+    }
+    return { hits: hits, close: close };
+  }
+  function statusOf(w) {
+    var s = srs[key(w)];
+    if (!s) return "没学过 New";
+    if (s.box >= 5) return "已掌握 Mastered";
+    return s.due <= today() ? "今天要复习 Due today" : "复习中 Learning";
+  }
+  function resultCard(w) {
+    var d = wordSet[key(w)];
+    return el("div", { class: "result" },
+      el("div", { class: "result-top" }, el("b", { class: "rw" }, w.en), " ",
+        w.phonetic ? el("span", { class: "phon" }, w.phonetic) : null, speakBtn(w), favBtn(w, true)),
+      el("div", null, w.pos ? el("span", { class: "pos" }, w.pos) : null, w.zh),
+      el("div", { class: "muted" }, (d ? d.date + (d.title ? " · " + d.title : "") + "  ·  " : "") + statusOf(w)),
+      sentenceBox(w, true),
+      rootsBox(w));
+  }
+  function renderSearch() {
+    var r = findWords(searchQ), list = r.hits.length ? r.hits : r.close;
+    add(app, el("section", { class: "card" },
+      el("div", { class: "muted" }, r.hits.length ? "找到 " + r.hits.length + " 个词 Found " + r.hits.length
+        : r.close.length ? "没有完全一样的，你是不是要找：Did you mean:" : "没有找到 No words found"),
+      list.slice(0, 30).map(resultCard),
+      list.length ? el("div", { class: "tools" },
+        el("button", { class: "btn primary", type: "button", onclick: function () {
+          var words = list.slice(0, 30); clearSearch(); setMode("write", words); } }, "✍️ 默写这些词 Practise these (" + Math.min(list.length, 30) + ")"),
+        el("button", { class: "btn", type: "button", onclick: function () { clearSearch(); render(); } }, "✕ 关闭搜索 Close")) : null));
+  }
 
   function wordsOf(sel) {
     if (sel === "review") return allWords.filter(isDue);
@@ -426,6 +485,7 @@
     app.textContent = "";
     document.querySelectorAll(".tabs button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.mode === mode)); });
     document.getElementById("mode-help").textContent = MODE_HELP[mode] || "";
+    if (searchQ.trim()) { setSel.style.display = ""; return renderSearch(); }
     setSel.style.display = mode === "stats" ? "none" : "";
     if (mode === "stats") return renderStats();
     if (mode === "print") return wordsOf(selected).length ? renderPrint() : renderEmpty();
@@ -440,7 +500,7 @@
   }
 
   function setMode(m, list) {
-    mode = m; store.set("mode", m); quiz = null;
+    mode = m; store.set("mode", m); quiz = null; clearSearch();
     if (list && m !== "print") startQuiz(list); else render();
   }
 
@@ -679,12 +739,15 @@
     days = (data.days || []).slice().sort(function (a, b) { return a.id < b.id ? 1 : -1; }); // newest first
     var seen = {};
     days.forEach(function (d) { d.words.forEach(function (w) { var k = key(w); if (!seen[k]) { seen[k] = 1; allWords.push(w); } }); });
+    days.slice().reverse().forEach(function (d) { d.words.forEach(function (w) { if (!wordSet[key(w)]) wordSet[key(w)] = d; }); });
     // Newest set if it has unlearned words, else today's review if anything is due, else newest set.
     var newest = days[0];
     var newestHasNew = newest && newest.words.some(function (w) { return !srs[key(w)]; });
     selected = newestHasNew ? newest.id : (allWords.some(isDue) ? "review" : (newest ? newest.id : "all"));
     refreshHeader();
-    setSel.addEventListener("change", function () { selected = setSel.value; quiz = null; render(); });
+    setSel.addEventListener("change", function () { selected = setSel.value; quiz = null; clearSearch(); render(); });
+    searchEl.addEventListener("input", function () { searchQ = searchEl.value; render(); });
+    searchEl.addEventListener("keydown", function (e) { if (e.key === "Escape") { clearSearch(); render(); } });
     document.querySelectorAll(".tabs button").forEach(function (b) {
       b.addEventListener("click", function () { setMode(b.dataset.mode); });
     });
