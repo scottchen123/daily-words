@@ -1,0 +1,223 @@
+{
+  "date": "2026-11-13",
+  "title": "第4组 Set 4",
+  "words": [
+    {
+      "en": "adapt", "phonetic": "/əˈdæpt/", "pos": "v.", "zh": "使适应；改编",
+      "sentence": "It took me a few months to adapt to life in a new city.",
+      "sentence_zh": "我花了几个月才适应新城市的生活。",
+      "roots": "ad-（向）+ apt（适合）→ 使适合 → 适应；改编",
+      "hook": "adapter 转接头：让插头「适合」插座",
+      "family": ["adaptation 适应；改编", "adapter 转接头", "aptitude 天赋"]
+    },
+    {
+      "en": "adjust", "phonetic": "/əˈdʒʌst/", "pos": "v.", "zh": "调整；适应",
+      "sentence": "You can adjust the height of the chair with this button.",
+      "sentence_zh": "你可以用这个按钮调整椅子的高度。",
+      "roots": "ad-（向）+ just（靠近，拉丁语 iuxta）→ 靠拢、对齐 → 调整",
+      "family": ["adjustment 调整", "adjustable 可调节的"]
+    },
+    {
+      "en": "alter", "phonetic": "/ˈɔːltə/", "pos": "v.", "zh": "改变",
+      "sentence": "We had to alter our plans because of the heavy rain.",
+      "sentence_zh": "因为大雨，我们不得不改变计划。",
+      "roots": "alter（另一个）→ 变成另一个样子 → 改变",
+      "family": ["alternative 替代的选择", "alternate 交替"]
+    },
+    {
+      "en": "analyze", "phonetic": "/ˈænəlaɪz/", "pos": "v.", "zh": "分析",
+      "sentence": "Our teacher helped us analyze the poem line by line.",
+      "sentence_zh": "老师帮我们一行一行地分析这首诗。",
+      "roots": "ana-（完全）+ lyze（松开，希腊语 lyein）→ 完全拆开 → 分析",
+      "family": ["analysis 分析", "analyst 分析师", "paralyze 使瘫痪（松开到没力气）"]
+    },
+    {
+      "en": "annual", "phonetic": "/ˈænjuəl/", "pos": "adj.", "zh": "每年的；年度的",
+      "sentence": "The company holds an annual meeting every December.",
+      "sentence_zh": "公司每年十二月都会开年度会议。",
+      "roots": "ann（年）+ -ual（…的）→ 每年的",
+      "hook": "anniversary 周年纪念日：同一个 ann「年」",
+      "family": ["anniversary 周年纪念日", "annually 每年"]
+    },
+    {
+      "en": "aside", "phonetic": "/əˈsaɪd/", "pos": "adv.", "zh": "在旁边；（set aside）留出",
+      "sentence": "She sets aside some money every month for travel.",
+      "sentence_zh": "她每个月都留出一些钱用来旅行。",
+      "roots": "a-（在）+ side（边）→ 在旁边 → 放到一边、留出",
+      "hook": "side 边：a + side"
+    },
+    {
+      "en": "complaint", "phonetic": "/kəmˈpleɪnt/", "pos": "n.", "zh": "投诉；控诉",
+      "sentence": "The hotel received a complaint about the noise from the bar.",
+      "sentence_zh": "酒店收到了关于酒吧噪音的投诉。",
+      "roots": "com-（加强）+ plaint（哀叹，拉丁语 plangere「捶胸痛哭」）→ 不停哀叹 → 抱怨、投诉（和 plain 平坦的无关）",
+      "hook": "complain 抱怨：动词形式",
+      "family": ["complain 抱怨", "plaintiff 原告"]
+    },
+    {
+      "en": "concentrate", "phonetic": "/ˈkɒnsəntreɪt/", "pos": "v.", "zh": "集中；专心",
+      "sentence": "It is hard to concentrate when my phone keeps ringing.",
+      "sentence_zh": "手机一直响的时候，很难集中注意力。",
+      "roots": "con-（一起）+ centr（中心）+ -ate → 聚到中心 → 集中",
+      "hook": "center 中心：同一个 centr",
+      "family": ["central 中心的", "eccentric 古怪的（偏离中心）"]
+    },
+    {
+      "en": "consequence", "phonetic": "/ˈkɒnsəkwəns/", "pos": "n.", "zh": "后果",
+      "sentence": "If you don't sleep enough, you will feel the consequences the next day.",
+      "sentence_zh": "如果你睡眠不足，第二天就会感受到后果。",
+      "roots": "con-（一起）+ sequ（跟随）+ -ence → 跟着来的东西 → 后果",
+      "hook": "second 第二：拉丁语 secundus「跟在后面」，同一个 sequ",
+      "family": ["sequence 顺序", "consecutive 连续的", "subsequent 随后的"]
+    },
+    {
+      "en": "consumption", "phonetic": "/kənˈsʌmpʃən/", "pos": "n.", "zh": "消费；消耗",
+      "sentence": "Our electricity consumption is much higher in summer.",
+      "sentence_zh": "我们夏天的用电量高很多。",
+      "roots": "con-（全部）+ sump（拿）+ -tion → 全部拿走用掉 → 消耗",
+      "hook": "consume 消费：动词形式",
+      "family": ["consume 消费", "consumer 消费者", "assume 承担"]
+    },
+    {
+      "en": "cope", "phonetic": "/kəʊp/", "pos": "v.", "zh": "应对；处理",
+      "sentence": "She learned to cope with stress by going for long walks.",
+      "sentence_zh": "她学会了通过长时间散步来应对压力。"
+    },
+    {
+      "en": "crop", "phonetic": "/krɒp/", "pos": "n.", "zh": "农作物；收成",
+      "sentence": "Rice is the main crop in this part of the country.",
+      "sentence_zh": "水稻是这个地区的主要农作物。"
+    },
+    {
+      "en": "cultivate", "phonetic": "/ˈkʌltəveɪt/", "pos": "v.", "zh": "培育；耕种",
+      "sentence": "My grandfather cultivates vegetables in a small garden behind his house.",
+      "sentence_zh": "我爷爷在屋后的小菜园里种蔬菜。",
+      "roots": "cult（耕种）+ -iv + -ate → 耕种 → 培育",
+      "hook": "culture 文化：原意也是「耕种」，培养人的心灵",
+      "family": ["culture 文化", "agriculture 农业"]
+    },
+    {
+      "en": "desirable", "phonetic": "/dɪˈzaɪərəbəl/", "pos": "adj.", "zh": "可取的；合意的",
+      "sentence": "Good communication skills are highly desirable in this job.",
+      "sentence_zh": "这份工作非常需要良好的沟通能力。",
+      "roots": "desire（渴望）+ -able（值得…的）→ 值得想要的 → 可取的",
+      "hook": "desire 渴望：去掉 -able"
+    },
+    {
+      "en": "desire", "phonetic": "/dɪˈzaɪə/", "pos": "n./v.", "zh": "渴望；欲望",
+      "sentence": "He has a strong desire to travel around the world.",
+      "sentence_zh": "他非常渴望环游世界。"
+    },
+    {
+      "en": "emission", "phonetic": "/iˈmɪʃən/", "pos": "n.", "zh": "排放（物）",
+      "sentence": "The city wants to reduce car emissions by thirty percent.",
+      "sentence_zh": "这座城市想把汽车排放减少百分之三十。",
+      "roots": "e-（出）+ miss（送）+ -ion → 送出去的东西 → 排放物",
+      "hook": "mission 任务 / missile 导弹：同一个 miss「送」",
+      "family": ["mission 任务", "submit 提交", "transmit 传送"]
+    },
+    {
+      "en": "employ", "phonetic": "/ɪmˈplɔɪ/", "pos": "v.", "zh": "使用；雇用",
+      "sentence": "The factory employs more than two hundred local workers.",
+      "sentence_zh": "这家工厂雇用了两百多名当地工人。",
+      "roots": "em-（进入）+ ploy（= plic，折叠；卷）→ 把人卷进来做事 → 雇用；使用",
+      "hook": "imply 暗示：和 employ 来自同一个拉丁词 implicare",
+      "family": ["employee 雇员", "employer 雇主", "imply 暗示"]
+    },
+    {
+      "en": "employee", "phonetic": "/ɪmˈplɔɪiː/", "pos": "n.", "zh": "雇员",
+      "sentence": "Every new employee gets a laptop on the first day.",
+      "sentence_zh": "每位新员工第一天都会拿到一台笔记本电脑。",
+      "roots": "employ（雇用）+ -ee（被…的人）→ 被雇用的人",
+      "hook": "employ 雇用",
+      "family": ["employer 雇主", "trainee 受训者", "interviewee 被面试者"]
+    },
+    {
+      "en": "entitled", "phonetic": "/ɪnˈtaɪtəld/", "pos": "adj.", "zh": "题为…的；有资格的",
+      "sentence": "Every worker is entitled to twenty days of paid holiday a year.",
+      "sentence_zh": "每个员工每年都有权享受二十天带薪假期。",
+      "roots": "en-（使）+ title（名称；名分）+ -d → 给了名称 / 名分 → 题为…的；有资格的",
+      "hook": "title 标题",
+      "family": ["entitle 给…权利", "title 标题"]
+    },
+    {
+      "en": "estimate", "phonetic": "/ˈestɪmət/ n. · /ˈestɪmeɪt/ v.", "pos": "v./n.", "zh": "估计",
+      "sentence": "We estimate that the trip will take about three hours.",
+      "sentence_zh": "我们估计这次旅程大约需要三个小时。",
+      "roots": "estim（估价，拉丁语 aestimare）+ -ate → 估价 → 估计",
+      "family": ["esteem 尊重（觉得有价值）", "underestimate 低估", "overestimate 高估"]
+    },
+    {
+      "en": "eventually", "phonetic": "/ɪˈventʃuəli/", "pos": "adv.", "zh": "最终",
+      "sentence": "After many failed attempts, he eventually passed his driving test.",
+      "sentence_zh": "失败了很多次之后，他最终通过了驾照考试。",
+      "roots": "e-（出）+ vent（来）+ -ual + -ly → 最后出来的结果 → 最终",
+      "hook": "event 事件：同一个 vent「来」，发生出来的事",
+      "family": ["event 事件", "adventure 冒险", "convention 大会（来到一起）"]
+    },
+    {
+      "en": "evidence", "phonetic": "/ˈevədəns/", "pos": "n.", "zh": "证据",
+      "sentence": "There is no evidence that this medicine really works.",
+      "sentence_zh": "没有证据表明这种药真的有效。",
+      "roots": "e-（出）+ vid（看）+ -ence → 看得出来的东西 → 证据",
+      "hook": "video 视频：同一个 vid「看」",
+      "family": ["evident 明显的", "provide 提供", "vision 视力"]
+    },
+    {
+      "en": "expectation", "phonetic": "/ˌekspekˈteɪʃən/", "pos": "n.", "zh": "期望；预期",
+      "sentence": "The movie was good, but it didn't meet my expectations.",
+      "sentence_zh": "这部电影不错，但没有达到我的期望。",
+      "roots": "ex-（出）+ (s)pect（看）+ -ation → 向外看着等 → 期望",
+      "hook": "expect 期待：动词形式",
+      "family": ["respect 尊重", "inspect 检查", "prospect 前景"]
+    },
+    {
+      "en": "extreme", "phonetic": "/ɪkˈstriːm/", "pos": "adj.", "zh": "极端的",
+      "sentence": "Some plants can survive extreme heat in the desert.",
+      "sentence_zh": "有些植物能在沙漠的极端高温中存活。",
+      "roots": "extr（= ex，外面）+ -eme（最）→ 最外面的 → 极端的",
+      "hook": "exit 出口：同一个 ex「出、外」",
+      "family": ["external 外部的", "extremely 极其"]
+    },
+    {
+      "en": "fair", "phonetic": "/feə/", "pos": "adj.", "zh": "公平的；合理的",
+      "sentence": "It isn't fair that I always have to wash the dishes.",
+      "sentence_zh": "总是我洗碗，这不公平。"
+    },
+    {
+      "en": "foster", "phonetic": "/ˈfɒstə/", "pos": "v.", "zh": "助长；培养",
+      "sentence": "Good teachers foster a love of reading in their students.",
+      "sentence_zh": "好老师会培养学生对阅读的热爱。",
+      "hook": "food 食物：真同源，foster 原意是「喂养」→ 培养"
+    },
+    {
+      "en": "harm", "phonetic": "/hɑːm/", "pos": "v./n.", "zh": "损害；伤害",
+      "sentence": "Too much sugar can harm your teeth.",
+      "sentence_zh": "吃太多糖会损害你的牙齿。"
+    },
+    {
+      "en": "imply", "phonetic": "/ɪmˈplaɪ/", "pos": "v.", "zh": "暗示；意味着",
+      "sentence": "These results imply that the new method works better.",
+      "sentence_zh": "这些结果意味着新方法效果更好。",
+      "roots": "im-（进入）+ ply（= plic，折叠）→ 把意思折在里面 → 暗示",
+      "hook": "complicated 复杂的：com（一起）+ plic（折）→ 折在一起",
+      "family": ["implication 含义", "complicated 复杂的", "employ 使用"]
+    },
+    {
+      "en": "profit", "phonetic": "/ˈprɒfɪt/", "pos": "n.", "zh": "利润",
+      "sentence": "The small shop made a good profit during the holidays.",
+      "sentence_zh": "这家小店在假期赚了不少钱。",
+      "roots": "pro-（向前）+ fit（= fic，做）→ 做出进展 → 好处；利润",
+      "hook": "fact 事实：fac ↔ fit，同一个「做」",
+      "family": ["benefit 好处（bene 好 + fit 做）", "proficient 熟练的"]
+    },
+    {
+      "en": "reveal", "phonetic": "/rɪˈviːl/", "pos": "v.", "zh": "揭示；透露",
+      "sentence": "The test results revealed a problem with the engine.",
+      "sentence_zh": "测试结果揭示了发动机的一个问题。",
+      "roots": "re-（反，去掉）+ veal（面纱）→ 揭开面纱 → 揭示",
+      "hook": "veil 面纱：同一个词根",
+      "family": ["revelation 揭露", "veil 面纱"]
+    }
+  ]
+}
